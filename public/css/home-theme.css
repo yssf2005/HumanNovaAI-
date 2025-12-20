@@ -1,0 +1,473 @@
+/* GLOBAL DARK FUTURISTIC THEME */
+
+/* 1. Base Body & Background */
+body {
+    background-color: #111;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    color: #e0e0e0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+/* 2. Global Header/Navbar Overrides */
+header {
+    background: rgba(17, 17, 17, 0.8) !important;
+    backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.logo {
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #00f2ff, #00c3ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo::before {
+    content: '◈';
+    color: #00f2ff;
+    -webkit-text-fill-color: #00f2ff;
+    font-size: 1.8rem;
+}
+
+nav a {
+    color: #e0e0e0 !important;
+    text-transform: uppercase;
+    font-size: 0.8rem !important;
+    letter-spacing: 1.5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #00f2ff !important;
+}
+
+nav input[type="text"] {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid #333 !important;
+    color: #fff !important;
+}
+
+nav input[type="text"]::placeholder {
+    color: #666;
+}
+
+/* 3. Cards & Containers */
+.card,
+.stat-card,
+.insta-post,
+.create-post-card,
+.post-card {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    color: #e0e0e0 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Specific text overrides within cards */
+.card h3,
+.stat-card .stat-number,
+.post-author-info h4 {
+    color: #fff !important;
+}
+
+.card p,
+.stat-card .stat-label,
+.post-author-info p,
+.post-caption,
+.comment {
+    color: #aaa !important;
+}
+
+/* 4. Forms & Inputs */
+input,
+textarea,
+select {
+    background: #222 !important;
+    border: 1px solid #444 !important;
+    color: #fff !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #00f2ff !important;
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.2) !important;
+}
+
+/* 5. Buttons */
+.btn {
+    background: linear-gradient(90deg, #4d5bf9, #9966ff) !important;
+    box-shadow: 0 0 15px rgba(77, 91, 249, 0.4);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    box-shadow: 0 0 25px rgba(77, 91, 249, 0.6);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #333 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+.btn-secondary:hover {
+    background: #444 !important;
+}
+
+.btn-success {
+    background: linear-gradient(90deg, #00ff9d, #21867a) !important;
+    color: #000 !important;
+}
+
+.btn-warning {
+    background: linear-gradient(90deg, #ffc800, #ff9100) !important;
+    color: #000 !important;
+}
+
+.btn-danger,
+.delete-link {
+    background: linear-gradient(90deg, #ff0055, #c1121f) !important;
+}
+
+/* 6. Typography Headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #fff !important;
+}
+
+.dashboard-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%) !important;
+    border: 1px solid #333;
+}
+
+/* 7. Modals & Popups */
+.modal-content,
+.notification-popup {
+    background: #1a1a1a !important;
+    border: 1px solid #333;
+    color: #fff !important;
+}
+
+.modal-content h2,
+.notification-content h4 {
+    color: #fff !important;
+}
+
+.modal-content p,
+.notification-content p {
+    color: #aaa !important;
+}
+
+.modal-icon {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* 8. Chatbot */
+#chatbot-window {
+    background: #1a1a1a !important;
+    border: 1px solid #333;
+}
+
+#chatbot-messages {
+    background: #111 !important;
+    color: #fff !important;
+}
+
+#chatbot-input {
+    border-top: 1px solid #333 !important;
+}
+
+#chatbot-input input {
+    background: #222 !important;
+    border-color: #333 !important;
+}
+
+/* 9. Badges & Tags */
+.badge {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border: 1px solid #333;
+}
+
+.badge-primary {
+    background: rgba(0, 242, 255, 0.15) !important;
+    color: #00f2ff !important;
+    border-color: #00f2ff;
+}
+
+.badge-success {
+    background: rgba(0, 255, 157, 0.15) !important;
+    color: #00ff9d !important;
+    border-color: #00ff9d;
+}
+
+.badge-warning {
+    background: rgba(255, 200, 0, 0.15) !important;
+    color: #ffc800 !important;
+    border-color: #ffc800;
+}
+
+.badge-danger {
+    background: rgba(255, 0, 85, 0.15) !important;
+    color: #ff0055 !important;
+    border-color: #ff0055;
+}
+
+/* 10. Tables */
+table {
+    color: #ddd !important;
+}
+
+th {
+    background: #222 !important;
+    color: #fff !important;
+    border-bottom: 2px solid #333 !important;
+}
+
+td {
+    border-bottom: 1px solid #333 !important;
+}
+
+tr:hover td {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 11. Carousel Styles (Preserved) */
+.carousel-container {
+    perspective: 1000px;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+.carousel-3d {
+    position: relative;
+    width: 350px;
+    height: 500px;
+    transform-style: preserve-3d;
+    transform: translateZ(-300px);
+    transition: transform 0.5s ease-out;
+}
+
+.carousel-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    border-radius: 15px;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.5s ease-out;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0.6;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    transform: translateZ(0) scale(1.1);
+    z-index: 10;
+    border: 1px solid #444;
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+}
+
+.carousel-item.prev {
+    transform: translateX(-350px) translateZ(-200px) rotateY(15deg);
+    z-index: 5;
+}
+
+.carousel-item.next {
+    transform: translateX(350px) translateZ(-200px) rotateY(-15deg);
+    z-index: 5;
+}
+
+.carousel-item.hide-left {
+    transform: translateX(-600px) translateZ(-400px) rotateY(25deg);
+    opacity: 0;
+    z-index: 1;
+}
+
+.carousel-item.hide-right {
+    transform: translateX(600px) translateZ(-400px) rotateY(-25deg);
+    opacity: 0;
+    z-index: 1;
+}
+
+.card-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.card-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, #1a1a1a, transparent);
+}
+
+.card-details {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #ddd;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-title.highlight {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.card-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.card-tag {
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #aaa;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.card-tag.purple {
+    color: #a600ff;
+    border-color: #a600ff;
+}
+
+.card-tag.blue {
+    color: #00f2ff;
+    border-color: #00f2ff;
+}
+
+.card-tag.green {
+    color: #00ff9d;
+    border-color: #00ff9d;
+}
+
+.btn-explore {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #4d5bf9, #9966ff);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(77, 91, 249, 0.4);
+}
+
+.btn-explore:hover {
+    box-shadow: 0 0 25px rgba(77, 91, 249, 0.8);
+    transform: scale(1.02);
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #333;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot.active {
+    background: #4d5bf9;
+    box-shadow: 0 0 10px #4d5bf9;
+    transform: scale(1.2);
+}
+
+.nav-arrow {
+    position: absolute;
+    bottom: -60px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #111;
+}
+
+.nav-arrow:hover {
+    border-color: #555;
+    color: #fff;
+}
+
+.nav-prev {
+    left: calc(50% - 70px);
+}
+
+.nav-next {
+    right: calc(50% - 70px);
+}

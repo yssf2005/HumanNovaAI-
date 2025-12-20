@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat API Test</title>
+</head>
+<body>
+    <h1>Chat API Test</h1>
+    <input type="text" id="testMessage" placeholder="Type a message" style="width: 300px; padding: 10px;">
+    <button onclick="testChat()">Send</button>
+    <div id="response" style="margin-top: 20px; padding: 20px; background: #f0f0f0;"></div>
+
+    <script>
+    async function testChat() {
+        const message = document.getElementById('testMessage').value;
+        const responseDiv = document.getElementById('response');
+        
+        responseDiv.innerHTML = 'Sending...';
+        
+        try {
+            const response = await fetch('http://localhost/projet2/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            });
+            
+            const data = await response.json();
+            responseDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        } catch (error) {
+            responseDiv.innerHTML = 'Error: ' + error.message;
+        }
+    }
+    </script>
+</body>
+</html>

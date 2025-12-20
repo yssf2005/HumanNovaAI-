@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Models;
+
+use App\Core\Model;
+use PDO;
+
+class User extends Model {
+    public function create($name, $email, $password, $role = 'user') {
+        $sql = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
+        $stmt = $this->db->prepare($sql);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':role', $role);
+        
+        if ($stmt->execute()) {
+            return $this->db->lastInsertId();
+        }
+        return false;
+    }
+
+    public function findByEmail($email) {
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function findById($id) {
+        $sql = "SELECT * FROM users WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function update($id, $name, $email, $password = null) {
+        if ($password) {
+            $sql = "UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id";
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        } else {
+            $sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
+        }
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id', $id);
+        
+        if ($password) {
+            $stmt->bindParam(':password', $hashedPassword);
+        }
+        
+        return $stmt->execute();
+    }
+}
