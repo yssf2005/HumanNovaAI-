@@ -17,14 +17,14 @@
         <form id="login-form" action="<?= BASE_URL ?>/login" method="POST" class="auth-form active">
             <div class="auth-field">
                 <label>EMAIL</label>
-                <input type="email" name="email" placeholder="helloworld@gmail.com" required>
+                <input type="email" name="email" autocomplete="email" placeholder="helloworld@gmail.com" required>
             </div>
             <div class="auth-field">
                 <label>MOT DE PASSE</label>
-                <input type="password" name="password" placeholder="••••••••••••" required>
+                <input type="password" name="password" autocomplete="current-password" placeholder="••••••••••••" required>
             </div>
             <div style="text-align: right; margin-bottom: 20px;">
-                <a href="#" style="color: #7d84ff; font-size: 0.9rem; text-decoration: none;">Mot de passe oublié ?</a>
+                <a href="<?= BASE_URL ?>/forgot" style="color: #7d84ff; font-size: 0.9rem; text-decoration: none;">Mot de passe oublié ?</a>
             </div>
             <button type="submit" class="auth-submit">SE CONNECTER</button>
         </form>

@@ -28,6 +28,12 @@ $app->router->post('/login', [App\Controllers\AuthController::class, 'handleLogi
 $app->router->get('/register', [App\Controllers\AuthController::class, 'register']);
 $app->router->post('/register', [App\Controllers\AuthController::class, 'handleRegister']);
 $app->router->get('/logout', [App\Controllers\AuthController::class, 'logout']);
+// Forgot password
+$app->router->get('/forgot', [App\Controllers\AuthController::class, 'forgot']);
+$app->router->post('/forgot', [App\Controllers\AuthController::class, 'handleForgot']);
+// Reset password (show form + handle submission)
+$app->router->get('/reset', [App\Controllers\AuthController::class, 'showReset']);
+$app->router->post('/reset', [App\Controllers\AuthController::class, 'handleReset']);
 
 // Dashboard
 $app->router->get('/dashboard', [App\Controllers\DashboardController::class, 'index']);

@@ -65,6 +65,26 @@ class InvestmentController extends Controller {
         
         $investmentModel = new Investment();
         if ($investmentModel->create($ideaId, $_SESSION['user_id'], $amount)) {
+            // Send receipt to investor
+            $ideaModel = new Idea();
+            $idea = $ideaModel->find($ideaId);
+            $investor = (new \App\Models\User())->findById($_SESSION['user_id']);
+            if ($investor && !empty($investor['email'])) {
+                $subject = 'Reçu de votre investissement';
+                $body = \App\Services\MailTemplates::investmentReceipt($investor['name'] ?? '', $idea['title'] ?? '', (float)$amount, defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
+                \App\Services\Mailer::send($investor['email'], $subject, $body);
+            }
+
+            // Notify idea owner
+            if ($idea && !empty($idea['user_id'])) {
+                $owner = (new \App\Models\User())->findById($idea['user_id']);
+                if ($owner && !empty($owner['email'])) {
+                    $subject2 = 'Nouvel investissement reçu';
+                    $body2 = \App\Services\MailTemplates::investmentReceipt($owner['name'] ?? '', $idea['title'] ?? '', (float)$amount, defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
+                    \App\Services\Mailer::send($owner['email'], $subject2, $body2);
+                }
+            }
+
             $this->redirect('/investments');
         } else {
             $this->redirect('/ideas');

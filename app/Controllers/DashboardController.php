@@ -108,9 +108,50 @@ class DashboardController extends Controller {
         $type = $_GET['type'] ?? '';
         $id = $_GET['id'] ?? '';
         
-        if ($type === 'idea') (new \App\Models\Idea())->approve($id);
-        if ($type === 'job') (new \App\Models\JobOffer())->approve($id);
-        if ($type === 'event') (new \App\Models\Event())->approve($id);
+        if ($type === 'idea') {
+            $ideaModel = new \App\Models\Idea();
+            if ($ideaModel->approve($id)) {
+                $idea = $ideaModel->find($id);
+                if ($idea && !empty($idea['user_id'])) {
+                    $user = (new \App\Models\User())->findById($idea['user_id']);
+                    if ($user && !empty($user['email'])) {
+                        $subject = 'Votre idée a été approuvée';
+                        $body = \App\Services\MailTemplates::ideaApproved($user['name'] ?? '', $idea['title'] ?? '', defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
+                        \App\Services\Mailer::send($user['email'], $subject, $body);
+                    }
+                }
+            }
+        }
+
+        if ($type === 'job') {
+            $jobModel = new \App\Models\JobOffer();
+            if ($jobModel->approve($id)) {
+                $job = $jobModel->find($id);
+                if ($job && !empty($job['user_id'])) {
+                    $user = (new \App\Models\User())->findById($job['user_id']);
+                    if ($user && !empty($user['email'])) {
+                        $subject = 'Votre offre d\'emploi a été approuvée';
+                        $body = \App\Services\MailTemplates::jobApproved($user['name'] ?? '', $job['title'] ?? '', defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
+                        \App\Services\Mailer::send($user['email'], $subject, $body);
+                    }
+                }
+            }
+        }
+
+        if ($type === 'event') {
+            $eventModel = new \App\Models\Event();
+            if ($eventModel->approve($id)) {
+                $event = $eventModel->find($id);
+                if ($event && !empty($event['user_id'])) {
+                    $user = (new \App\Models\User())->findById($event['user_id']);
+                    if ($user && !empty($user['email'])) {
+                        $subject = 'Votre événement a été approuvé';
+                        $body = \App\Services\MailTemplates::eventApproved($user['name'] ?? '', $event['title'] ?? '', defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
+                        \App\Services\Mailer::send($user['email'], $subject, $body);
+                    }
+                }
+            }
+        }
         
         $this->redirect('/admin/approvals');
     }
