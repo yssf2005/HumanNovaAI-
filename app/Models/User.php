@@ -6,13 +6,14 @@ use App\Core\Model;
 use PDO;
 
 class User extends Model {
-    public function create($name, $email, $password, $role = 'user') {
-        $sql = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
+    public function create($name, $email, $password, $phone = null, $role = 'user') {
+        $sql = "INSERT INTO users (name, email, phone, password, role) VALUES (:name, :email, :phone, :password, :role)";
         $stmt = $this->db->prepare($sql);
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':password', $hashedPassword);
         $stmt->bindParam(':role', $role);
         
@@ -37,18 +38,19 @@ class User extends Model {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function update($id, $name, $email, $password = null) {
+    public function update($id, $name, $email, $password = null, $phone = null) {
         if ($password) {
-            $sql = "UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id";
+            $sql = "UPDATE users SET name = :name, email = :email, password = :password, phone = :phone WHERE id = :id";
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         } else {
-            $sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
+            $sql = "UPDATE users SET name = :name, email = :email, phone = :phone WHERE id = :id";
         }
         
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':phone', $phone);
         
         if ($password) {
             $stmt->bindParam(':password', $hashedPassword);

@@ -33,4 +33,13 @@ try {
     echo "Error creating table: " . $e->getMessage() . "\n";
 }
 
+    // Add phone column to users if not present
+    try {
+        $sql = "ALTER TABLE users ADD COLUMN phone VARCHAR(50) DEFAULT NULL AFTER email";
+        $db->query($sql);
+        echo "Added phone column to users table.\n";
+    } catch (PDOException $e) {
+        echo "Phone column likely exists or error: " . $e->getMessage() . "\n";
+    }
+
 echo "Migration complete.\n";

@@ -14,9 +14,18 @@ class Controller {
         include_once __DIR__ . "/../Views/$view.php";
         $content = ob_get_clean();
         
-        // Check if we should use the main layout
-        // For partials or AJAX, might want different behavior
-        include_once __DIR__ . "/../Views/layouts/main.php";
+        // Determine which layout to use. Priority:
+        // 1. If caller passed a $layout param, use it.
+        // 2. If view is under the "auth/" folder, use the auth layout.
+        // 3. Otherwise use the main layout.
+        $layoutToUse = 'main';
+        if (isset($layout) && is_string($layout) && !empty($layout)) {
+            $layoutToUse = $layout;
+        } elseif (strpos($view, 'auth/') === 0) {
+            $layoutToUse = 'auth';
+        }
+
+        include_once __DIR__ . "/../Views/layouts/{$layoutToUse}.php";
     }
     
     public function redirect($url) {

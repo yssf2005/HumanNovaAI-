@@ -50,30 +50,102 @@ class AuthController extends Controller {
     }
 
     public function register() {
+        // Render the registration form (Google reCAPTCHA expected on the form)
         $this->render('auth/register');
     }
 
     public function handleRegister() {
-        $name = $_POST['name'] ?? '';
-        $email = $_POST['email'] ?? '';
+        $nom = trim($_POST['nom'] ?? '');
+        $prenom = trim($_POST['prenom'] ?? '');
+        $phone = trim($_POST['num_tel'] ?? '');
+        $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
-        
-        // Simple validation
-        if (empty($name) || empty($email) || empty($password)) {
-             $this->render('auth/register', ['error' => 'All fields are required']);
+        $password_confirm = $_POST['password_confirm'] ?? '';
+
+        // Basic validation
+        if (empty($nom) || empty($prenom) || empty($email) || empty($password) || empty($password_confirm)) {
+             $this->render('auth/register', ['error' => 'Tous les champs sont requis']);
              return;
         }
 
-        $userModel = new User();
-        if ($userModel->findByEmail($email)) {
-            $this->render('auth/register', ['error' => 'Email already exists']);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->render('auth/register', ['error' => "Email invalide"]);
             return;
         }
 
-        if ($userModel->create($name, $email, $password)) {
+        if ($password !== $password_confirm) {
+            $this->render('auth/register', ['error' => "Les mots de passe ne correspondent pas"]);
+            return;
+        }
+
+        if (strlen($password) < 8) {
+            $this->render('auth/register', ['error' => 'Le mot de passe doit contenir au moins 8 caractères']);
+            return;
+        }
+
+        // Determine whether reCAPTCHA is fully configured (both site key and secret)
+        $recaptchaConfigured = (defined('RECAPTCHA_SECRET') && RECAPTCHA_SECRET && defined('RECAPTCHA_SITE_KEY') && RECAPTCHA_SITE_KEY);
+
+        // If enforcement is enabled but reCAPTCHA is not configured, block registration
+        if (defined('RECAPTCHA_ENFORCE') && RECAPTCHA_ENFORCE && !$recaptchaConfigured) {
+            $this->render('auth/register', ['error' => 'reCAPTCHA requis mais non configuré. Contactez l\'administrateur.']);
+            return;
+        }
+
+        // If reCAPTCHA is configured, verify it server-side
+        if ($recaptchaConfigured) {
+            $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
+            if (!$recaptchaResponse) {
+                $this->render('auth/register', ['error' => 'reCAPTCHA manquant.']);
+                return;
+            }
+
+            $remoteIp = $_SERVER['REMOTE_ADDR'] ?? null;
+            $verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+            $data = http_build_query([
+                'secret' => RECAPTCHA_SECRET,
+                'response' => $recaptchaResponse,
+                'remoteip' => $remoteIp
+            ]);
+            $opts = ['http' => ['method' => 'POST', 'header' => "Content-type: application/x-www-form-urlencoded\r\n", 'content' => $data]];
+            $context = stream_context_create($opts);
+            $result = @file_get_contents($verifyUrl, false, $context);
+            $json = $result ? json_decode($result, true) : null;
+
+            if (!($json && isset($json['success']) && $json['success'] === true)) {
+                $this->render('auth/register', ['error' => 'reCAPTCHA invalide']);
+                return;
+            }
+
+            // If reCAPTCHA v3 returned a score, enforce minimum score
+            if (isset($json['score'])) {
+                $score = (float) $json['score'];
+                if (!defined('RECAPTCHA_MIN_SCORE')) {
+                    define('RECAPTCHA_MIN_SCORE', 0.5);
+                }
+                if ($score < RECAPTCHA_MIN_SCORE) {
+                    $this->render('auth/register', ['error' => 'reCAPTCHA score trop faible (' . htmlspecialchars((string)$score) . ').']);
+                    return;
+                }
+            }
+        }
+
+        // Note: only Google reCAPTCHA is required now; server-side verification handled above.
+
+        $userModel = new User();
+        if ($userModel->findByEmail($email)) {
+            $this->render('auth/register', ['error' => 'Cet email existe déjà']);
+            return;
+        }
+
+        // Combine prenom + nom into name since the users table stores a single name field
+        $name = $prenom . ' ' . $nom;
+
+        $created = $userModel->create($name, $email, $password, $phone);
+        if ($created) {
             $this->redirect('/login');
         } else {
-             $this->render('auth/register', ['error' => 'Registration failed']);
+             $this->render('auth/register', ['error' => 'Échec de l\'inscription']);
         }
     }
 
