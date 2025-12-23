@@ -56,7 +56,8 @@ CREATE TABLE IF NOT EXISTS events (
     description TEXT,
     date DATETIME,
     location VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at DATETIME DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS posts (

@@ -1,68 +1,77 @@
-<div class="section-header">
-    <h2>📅 Upcoming Events</h2>
+<div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>📅 Events</h2>
     <a href="<?= BASE_URL ?>/events/create" class="btn">+ Create Event</a>
 </div>
 
 <!-- Search -->
-<div class="card" style="margin-bottom: 25px;">
-    <form action="<?= BASE_URL ?>/events" method="GET" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-        <input type="text" name="search" value="<?= htmlspecialchars($search ?? '') ?>" 
-               placeholder="🔍 Search events..." 
-               style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; border: 2px solid #e0e0e0;">
+<div class="card" style="margin-bottom: 18px;">
+    <form action="<?= BASE_URL ?>/events" method="GET" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <input type="text" name="search" value="<?= htmlspecialchars($search ?? '') ?>" placeholder="🔍 Search events..." style="flex:1; min-width:180px; padding:10px 16px; border-radius:20px; border:1px solid #e6e6e6;">
         <button type="submit" class="btn">Search</button>
-        <?php if (!empty($search)): ?>
-            <a href="<?= BASE_URL ?>/events" class="btn btn-secondary">Clear</a>
-        <?php endif; ?>
+        <?php if (!empty($search)): ?><a href="<?= BASE_URL ?>/events" class="btn btn-secondary">Clear</a><?php endif; ?>
     </form>
 </div>
 
+<!-- Upcoming events -->
+<h3 style="margin-top:6px;">Upcoming Events</h3>
 <div class="card-grid">
-    <?php foreach ($events as $event): ?>
+    <?php if (!empty($upcoming)): foreach ($upcoming as $event): ?>
     <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div style="display:flex;justify-content:space-between;align-items:start;">
             <h3><?= htmlspecialchars($event['title']) ?></h3>
-            <span class="badge badge-success">📅 Event</span>
+            <span class="badge badge-info">Soon</span>
         </div>
-        <p style="font-weight: 600; color: var(--primary); margin: 10px 0;">
-            🗓️ <?= date('F d, Y - H:i', strtotime($event['date'])) ?>
-        </p>
-        <p style="margin: 5px 0;">
-            📍 <strong><?= htmlspecialchars($event['location']) ?></strong>
-        </p>
-        <p style="margin: 10px 0; color: #666;"><?= nl2br(htmlspecialchars(substr($event['description'], 0, 100))) ?>...</p>
-        
-        <div style="margin-top: 15px; display: flex; gap: 5px; flex-wrap: wrap;">
-            <?php if ($event['is_participating'] ?? false): ?>
-                <button class="btn btn-secondary btn-sm" disabled>✅ Registered</button>
-            <?php else: ?>
-                <a href="<?= BASE_URL ?>/events/participate?id=<?= $event['id'] ?>" class="btn btn-success btn-sm">🎟️ Participate</a>
-            <?php endif; ?>
-            
-            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
-                <a href="<?= BASE_URL ?>/events/edit?id=<?= $event['id'] ?>" class="btn btn-secondary btn-sm">✏️ Edit</a>
-                <a href="<?= BASE_URL ?>/events/delete?id=<?= $event['id'] ?>" class="btn btn-sm delete-link" style="background: #e63946;">🗑️</a>
-            <?php endif; ?>
+        <p style="font-weight:700;color:var(--primary);margin:8px 0;">🗓️ <?= date('F d, Y - H:i', strtotime($event['date'])) ?></p>
+        <p>📍 <strong><?= htmlspecialchars($event['location']) ?></strong></p>
+        <p style="color:#666;"><?= nl2br(htmlspecialchars(substr($event['description'],0,120))) ?>...</p>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+            <?php if ($event['is_participating'] ?? false): ?><button class="btn btn-secondary btn-sm" disabled>✅ Registered</button>
+            <?php else: ?><a href="<?= BASE_URL ?>/events/participate?id=<?= $event['id'] ?>" class="btn btn-success btn-sm">🎟️ Participate</a><?php endif; ?>
+            <a href="<?= BASE_URL ?>/events/edit?id=<?= $event['id'] ?>" class="btn btn-secondary btn-sm" style="<?php if(!isset($_SESSION['user_role'])||$_SESSION['user_role']!='admin'){echo 'display:none;';} ?>">✏️ Edit</a>
         </div>
     </div>
-    <?php endforeach; ?>
+    <?php endforeach; else: ?>
+        <div class="card" style="text-align:center; padding:30px;">No upcoming events.</div>
+    <?php endif; ?>
 </div>
 
-<?php if (empty($events)): ?>
-<div class="card" style="text-align: center; padding: 50px;">
-    <h3>No events <?= !empty($search) ? 'found' : 'scheduled' ?>!</h3>
-    <p><?= !empty($search) ? 'Try a different search term.' : 'Check back later or create your own event.' ?></p>
-    <a href="<?= BASE_URL ?>/events/create" class="btn" style="margin-top: 15px;">Create Event</a>
+<!-- Recent events -->
+<h3 style="margin-top:20px;">Recent Events</h3>
+<div class="card-grid">
+    <?php if (!empty($recent)): foreach ($recent as $event): ?>
+    <div class="card">
+        <h4><?= htmlspecialchars($event['title']) ?></h4>
+        <p style="font-size:0.95rem;color:#666;">Added <?= date('M d, Y', strtotime($event['created_at'] ?? $event['date'])) ?> — 🗓️ <?= date('M d, Y', strtotime($event['date'])) ?></p>
+        <p><?= nl2br(htmlspecialchars(substr($event['description'],0,100))) ?>...</p>
+    </div>
+    <?php endforeach; else: ?>
+        <div class="card" style="text-align:center; padding:20px;">No recent events.</div>
+    <?php endif; ?>
 </div>
-<?php endif; ?>
 
-<!-- Pagination -->
-<?php if (isset($totalPages) && $totalPages > 1): ?>
-<div style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <a href="<?= BASE_URL ?>/events?page=<?= $i ?><?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" 
-           class="btn <?= ($page ?? 1) == $i ? '' : 'btn-secondary' ?> btn-sm">
-            <?= $i ?>
-        </a>
-    <?php endfor; ?>
-</div>
+<!-- Past events directory -->
+<h3 style="margin-top:20px;">Past Events</h3>
+<?php if (!empty($pastEvents)): ?>
+    <div class="card-grid">
+        <?php foreach ($pastEvents as $event): ?>
+        <div class="card">
+            <h4><?= htmlspecialchars($event['title']) ?></h4>
+            <p style="font-size:0.95rem;color:#666;">Occurred <?= date('M d, Y', strtotime($event['date'])) ?></p>
+            <p><?= nl2br(htmlspecialchars(substr($event['description'],0,160))) ?>...</p>
+            <div style="margin-top:10px;">
+                <a href="<?= BASE_URL ?>/events/edit?id=<?= $event['id'] ?>" class="btn btn-secondary btn-sm" style="<?php if(!isset($_SESSION['user_role'])||$_SESSION['user_role']!='admin'){echo 'display:none;';} ?>">✏️ Edit</a>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <?php if (isset($pastTotalPages) && $pastTotalPages > 1): ?>
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:18px;">
+        <?php for ($i = 1; $i <= $pastTotalPages; $i++): ?>
+            <a href="<?= BASE_URL ?>/events?past_page=<?= $i ?><?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" class="btn <?= ($pastPage ?? 1) == $i ? '' : 'btn-secondary' ?> btn-sm"><?= $i ?></a>
+        <?php endfor; ?>
+    </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="card" style="text-align:center;padding:20px;">No past events found.</div>
 <?php endif; ?>
