@@ -6,6 +6,8 @@ use App\Core\Controller;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Like;
+use App\Models\Notification;
+use App\Models\User;
 
 class BlogController extends Controller {
     public function index() {
@@ -75,7 +77,19 @@ class BlogController extends Controller {
         
         if ($postId && !empty($content)) {
             $commentModel = new Comment();
-            $commentModel->create($_SESSION['user_id'], $postId, $content);
+            $created = $commentModel->create($_SESSION['user_id'], $postId, $content);
+
+            // create notification for post owner (don't notify if user comments on their own post)
+            $postModel = new Post();
+            $post = $postModel->find($postId);
+            if ($created && $post && isset($post['user_id']) && $post['user_id'] != $_SESSION['user_id']) {
+                $userModel = new User();
+                $actor = $userModel->findById($_SESSION['user_id']);
+                $actorName = $actor ? $actor['name'] : 'Someone';
+                $notif = new Notification();
+                $message = $actorName . ' commented on your post: ' . (strlen($content) > 100 ? substr($content,0,100) . '...' : $content);
+                $notif->create($post['user_id'], $_SESSION['user_id'], 'comment', $message, '/feed#post-' . $postId);
+            }
         }
         $this->redirect('/feed');
     }
@@ -87,7 +101,21 @@ class BlogController extends Controller {
         $postId = $_GET['id'] ?? null;
         if ($postId) {
             $likeModel = new Like();
-            $likeModel->toggle($_SESSION['user_id'], $postId);
+            $liked = $likeModel->toggle($_SESSION['user_id'], $postId);
+
+            // if liked (not unliked), create a notification for post owner
+            if ($liked) {
+                $postModel = new Post();
+                $post = $postModel->find($postId);
+                if ($post && isset($post['user_id']) && $post['user_id'] != $_SESSION['user_id']) {
+                    $userModel = new User();
+                    $actor = $userModel->findById($_SESSION['user_id']);
+                    $actorName = $actor ? $actor['name'] : 'Someone';
+                    $notif = new Notification();
+                    $message = $actorName . ' liked your post';
+                    $notif->create($post['user_id'], $_SESSION['user_id'], 'like', $message, '/feed#post-' . $postId);
+                }
+            }
         }
         $this->redirect('/feed');
     }
