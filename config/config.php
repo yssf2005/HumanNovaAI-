@@ -4,55 +4,50 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'innovation_platform');
 define('BASE_URL', 'http://localhost/projet2/public');
-
-// Mail configuration - do NOT commit real credentials to public repos
-define('MAIL_DRIVER', 'smtp');
+// Mail configuration (updated to use your Gmail SMTP settings)
+define('MAIL_DRIVER', 'smtp'); // 'mail' or 'smtp' or 'phpmailer' (if PHPMailer installed)
+define('MAIL_FROM_ADDRESS', 'espsytunisia@gmail.com');
+define('MAIL_FROM_NAME', 'PRO MANGEAI');
 define('MAIL_SMTP_HOST', 'smtp.gmail.com');
 define('MAIL_SMTP_PORT', 587);
 define('MAIL_SMTP_USER', 'espsytunisia@gmail.com');
 define('MAIL_SMTP_PASS', 'isae zjyl bkjm aiyv');
-define('MAIL_SMTP_SECURE', 'tls');
-define('MAIL_FROM_ADDRESS', MAIL_SMTP_USER);
-define('MAIL_FROM_NAME', 'PRO MANGEAI');
-
-// For Gmail, prefer app passwords or OAuth2; avoid plain account passwords when possible.
-
-// Token pepper used to harden stored token hashes (keep secret, do NOT commit changes)
-// Preferred: set via environment variable `TOKEN_PEPPER` on the server.
-if (getenv('TOKEN_PEPPER') && getenv('TOKEN_PEPPER') !== false) {
-	define('TOKEN_PEPPER', getenv('TOKEN_PEPPER'));
-} else {
-	define('TOKEN_PEPPER', 'replace_this_with_a_long_random_secret_and_store_safely');
+define('MAIL_SMTP_SECURE', 'tls'); // 'tls' or 'ssl' or ''
+// If a .env file exists, load simple KEY=VALUE pairs into environment for local development (non-recursive, no interpolation)
+$envFile = __DIR__ . '/../.env';
+if (file_exists($envFile)) {
+	$lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	foreach ($lines as $line) {
+		$line = trim($line);
+		if ($line === '' || strpos($line, '#') === 0) continue;
+		if (strpos($line, '=') === false) continue;
+		list($k, $v) = explode('=', $line, 2);
+		$k = trim($k);
+		$v = trim($v);
+		// remove surrounding quotes if present
+		if ((substr($v,0,1) === '"' && substr($v,-1) === '"') || (substr($v,0,1) === "'" && substr($v,-1) === "'")) {
+			$v = substr($v,1,-1);
+		}
+		// only set if not already in environment
+		if (getenv($k) === false) {
+			putenv("$k=$v");
+			$_ENV[$k] = $v;
+			$_SERVER[$k] = $v;
+		}
+	}
 }
 
-// Google reCAPTCHA - set these in your environment or replace with real keys on the server.
-// To enable, put your site key in RECAPTCHA_SITE_KEY and secret in RECAPTCHA_SECRET.
-if (getenv('RECAPTCHA_SITE_KEY') && getenv('RECAPTCHA_SITE_KEY') !== false) {
-    define('RECAPTCHA_SITE_KEY', getenv('RECAPTCHA_SITE_KEY'));
-} else {
-    // Fallback to configured site key
-    define('RECAPTCHA_SITE_KEY', '6LfpfDMsAAAAAKyGv0OMQXIo9x0GRTtNS11zO6Tp');
-}
+// reCAPTCHA settings (prefer environment variables)
+define('RECAPTCHA_SITE_KEY', getenv('RECAPTCHA_SITE_KEY') !== false ? getenv('RECAPTCHA_SITE_KEY') : 'your_site_key_here');
+define('RECAPTCHA_SECRET', getenv('RECAPTCHA_SECRET') !== false ? getenv('RECAPTCHA_SECRET') : 'your_secret_here');
+define('RECAPTCHA_ENFORCE', getenv('RECAPTCHA_ENFORCE') !== false ? (bool)filter_var(getenv('RECAPTCHA_ENFORCE'), FILTER_VALIDATE_BOOLEAN) : false); // set true in production
+define('RECAPTCHA_MIN_SCORE', getenv('RECAPTCHA_MIN_SCORE') !== false ? (float)getenv('RECAPTCHA_MIN_SCORE') : 0.5);
 
-if (getenv('RECAPTCHA_SECRET') && getenv('RECAPTCHA_SECRET') !== false) {
-    define('RECAPTCHA_SECRET', getenv('RECAPTCHA_SECRET'));
-} else {
-    // Fallback to configured secret
-    define('RECAPTCHA_SECRET', '6LfpfDMsAAAAAF6BhuODBOX79jKxtbXvi2vkZGlk');
-}
+// Footer / site info (can be overridden via environment variables or .env)
+define('FOOTER_TITLE', getenv('FOOTER_TITLE') !== false ? getenv('FOOTER_TITLE') : 'PRO MANGEAI');
+define('FOOTER_DESCRIPTION', getenv('FOOTER_DESCRIPTION') !== false ? getenv('FOOTER_DESCRIPTION') : 'Connecting ideas, talent and capital — a place to launch and grow projects.');
+define('FOOTER_EMAIL', getenv('FOOTER_EMAIL') !== false ? getenv('FOOTER_EMAIL') : 'support@promangeai.com');
+define('FOOTER_PHONE', getenv('FOOTER_PHONE') !== false ? getenv('FOOTER_PHONE') : '+216 00 000 000');
+// JSON array of {label, href} for footer links; href may be absolute or start with '/'
+define('FOOTER_LINKS_JSON', getenv('FOOTER_LINKS_JSON') !== false ? getenv('FOOTER_LINKS_JSON') : '[{"label":"Home","href":"/"},{"label":"Contact","href":"/contact"},{"label":"Privacy","href":"/privacy"}]');
 
-// Optionally enforce reCAPTCHA even on localhost (set to '1' or 'true' in env to enforce)
-if (getenv('RECAPTCHA_ENFORCE') && getenv('RECAPTCHA_ENFORCE') !== false) {
-    $val = strtolower(trim((string)getenv('RECAPTCHA_ENFORCE')));
-    define('RECAPTCHA_ENFORCE', in_array($val, ['1', 'true', 'yes'], true));
-} else {
-    define('RECAPTCHA_ENFORCE', false);
-}
-
-// Minimum acceptable score for reCAPTCHA v3 (0.0 - 1.0). Increase to be stricter.
-if (getenv('RECAPTCHA_MIN_SCORE') && getenv('RECAPTCHA_MIN_SCORE') !== false) {
-    $score = (float) getenv('RECAPTCHA_MIN_SCORE');
-    define('RECAPTCHA_MIN_SCORE', $score);
-} else {
-    define('RECAPTCHA_MIN_SCORE', 0.5);
-}

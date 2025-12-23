@@ -1,13 +1,11 @@
 <?php
-namespace App\Services;
-
 /*
  * Simple Mailer service.
  * - Uses PHPMailer (if installed via Composer) for SMTP or mail transport.
  * - Falls back to PHP `mail()` if PHPMailer is not available.
  *
  * Example:
- *   \App\Services\Mailer::send('user@example.com', 'Welcome', '<p>Hello</p>');
+ *   Mailer::send('user@example.com', 'Welcome', '<p>Hello</p>');
  */
 
 class Mailer
@@ -68,7 +66,7 @@ class Mailer
                 }
 
                 return $mail->send();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return false;
             }
         }
@@ -89,9 +87,4 @@ class Mailer
 
         return mail($to, $subject, $body, $headersStr);
     }
-}
-
-// Keep a global alias `Mailer` for backward-compatibility with existing code.
-if (!class_exists('\Mailer')) {
-    class_alias(__NAMESPACE__ . '\\Mailer', '\\Mailer');
 }

@@ -101,6 +101,21 @@ HTML;
         return "<p>Bonjour {$recipient},</p><p>Votre événement <strong>\"{$title}\"</strong> a été approuvé par l'équipe et est maintenant publié sur {$appName}.</p>";
     }
 
+    public static function eventParticipationReceipt(string $recipientName, string $eventTitle, string $eventDate = '', string $location = '', string $appName = null): string
+    {
+      $appName = $appName ?? (defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : 'Our App');
+      $recipient = htmlspecialchars($recipientName ?: '');
+      $title = htmlspecialchars($eventTitle);
+      $date = htmlspecialchars($eventDate ?: '');
+      $loc = htmlspecialchars($location ?: '');
+
+      return "<p>Bonjour {$recipient},</p>"
+        . "<p>Merci pour votre inscription à l'événement <strong>\"{$title}\"</strong> sur {$appName}.</p>"
+        . ($date ? "<p>🗓️ Date: <strong>{$date}</strong></p>" : "")
+        . ($loc ? "<p>📍 Lieu: <strong>{$loc}</strong></p>" : "")
+        . "<p>Nous avons hâte de vous y voir.</p>";
+    }
+
     public static function jobApproved(string $recipientName, string $jobTitle, string $appName = null): string
     {
         $appName = $appName ?? (defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : 'Our App');
