@@ -169,3 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCarousel();
 });
 </script>
+
+<!-- About excerpt on home page -->
+<section class="about-section">
+    <div class="about-card">
+        <h2><?= htmlspecialchars(FOOTER_TITLE) ?></h2>
+        <p><?= htmlspecialchars(FOOTER_DESCRIPTION) ?></p>
+        <p style="margin-top:12px;"><a href="#site-footer" class="btn">Learn more</a></p>
+    </div>
+</section>
