@@ -42,6 +42,9 @@
     <header>
         <a href="<?= BASE_URL ?>/" class="logo">🚀 Innovate</a>
         <nav>
+            <form action="<?= BASE_URL ?>/search" method="GET" style="display:inline-block;margin-right:10px;vertical-align:middle;">
+                <input type="text" name="q" placeholder="🔍 Search..." style="padding:6px 10px;border-radius:18px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff;min-width:180px;" />
+            </form>
             <a href="<?= BASE_URL ?>/">Home</a>
             <a href="<?= BASE_URL ?>/ideas">💡 Ideas</a>
             <a href="<?= BASE_URL ?>/investments">💰 Investments</a>
@@ -83,9 +86,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="<?= BASE_URL ?>/search" method="GET" style="margin-left:12px;">
-                <input type="text" name="q" placeholder="🔍 Search...">
-            </form>
+            <!-- search moved to before Home -->
         </nav>
     </header>
 
