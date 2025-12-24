@@ -31,6 +31,11 @@ body {
     animation: fadeIn 0.5s ease;
 }
 
+/* Enable smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -397,6 +402,42 @@ nav input[type="text"]:focus {
     gap: 15px;
     margin-bottom: 10px;
 }
+
+/* ===========================
+   SITE FOOTER
+   =========================== */
+.page-footer {
+    padding: 48px 12px;
+    background: linear-gradient(180deg,#071029 0%, #0b1220 100%);
+    color: #e6eef8;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    margin-top: 28px;
+}
+.page-footer .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.page-footer .footer-col { min-width: 180px; }
+.page-footer h3 { margin:0 0 8px 0; color:#00e0ff; letter-spacing:0.6px; }
+.page-footer p { margin:0 0 12px 0; line-height:1.6; color:#bcd3e6; }
+.page-footer .footer-links { list-style:none; padding:0; margin:0; color:#bcd3e6; line-height:1.9 }
+.page-footer .footer-links a { color:inherit; text-decoration:none; }
+.page-footer .footer-contact a { color:#9fe7ff; text-decoration:none; }
+.page-footer .footer-social a { display:inline-block; width:36px; height:36px; background:#0b2b3a; border-radius:6px; color:#9fe7ff; text-align:center; line-height:36px; text-decoration:none; margin-right:8px; }
+
+/* ===========================
+   ABOUT SECTION (on home)
+   =========================== */
+.about-section { padding: 36px 0; }
+.about-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: var(--shadow); }
+.about-card h2 { color: var(--secondary); margin-bottom:10px; }
+.about-card p { color: var(--gray); line-height:1.6; }
+
 
 .insta-post .post-actions button,
 .insta-post .post-actions a {

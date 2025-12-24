@@ -104,4 +104,11 @@ $app->router->post('/invest/store', [App\Controllers\InvestmentController::class
 // Search
 $app->router->get('/search', [App\Controllers\SearchController::class, 'index']);
 
+// Static pages
+$app->router->get('/about', [App\Controllers\PageController::class, 'about']);
+$app->router->get('/contact', [App\Controllers\PageController::class, 'contact']);
+$app->router->get('/privacy', [App\Controllers\PageController::class, 'privacy']);
+// keep legacy footer route for compatibility
+$app->router->get('/footer', [App\Controllers\PageController::class, 'footer']);
+
 $app->run();

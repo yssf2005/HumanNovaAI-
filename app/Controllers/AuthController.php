@@ -83,8 +83,22 @@ class AuthController extends Controller {
             return;
         }
 
-        // Determine whether reCAPTCHA is fully configured (both site key and secret)
-        $recaptchaConfigured = (defined('RECAPTCHA_SECRET') && RECAPTCHA_SECRET && defined('RECAPTCHA_SITE_KEY') && RECAPTCHA_SITE_KEY);
+        // Determine whether running on localhost (allow skipping CAPTCHA locally unless enforced)
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $isLocal = false;
+        if ($host) {
+            $lh = strtolower($host);
+            if (strpos($lh, 'localhost') !== false || $lh === '127.0.0.1') {
+                $isLocal = true;
+            }
+        } else {
+            $isLocal = (stripos(BASE_URL, 'localhost') !== false || stripos(BASE_URL, '127.0.0.1') !== false);
+        }
+
+        // Determine whether reCAPTCHA is fully configured (both site key and secret).
+        // However, if running on localhost and `RECAPTCHA_ENFORCE` is false, treat it as not configured so local dev isn't blocked.
+        $hasRecaptchaKeys = (defined('RECAPTCHA_SECRET') && RECAPTCHA_SECRET && defined('RECAPTCHA_SITE_KEY') && RECAPTCHA_SITE_KEY);
+        $recaptchaConfigured = $hasRecaptchaKeys && (!($isLocal) || (defined('RECAPTCHA_ENFORCE') && RECAPTCHA_ENFORCE));
 
         // If enforcement is enabled but reCAPTCHA is not configured, block registration
         if (defined('RECAPTCHA_ENFORCE') && RECAPTCHA_ENFORCE && !$recaptchaConfigured) {

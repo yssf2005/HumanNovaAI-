@@ -15,7 +15,7 @@ class TokenService
 
     public static function hashValidator(string $validator): string
     {
-        $pepper = defined('TOKEN_PEPPER') ? TOKEN_PEPPER : '';
+        $pepper = defined('TOKEN_PEPPER') ? constant('TOKEN_PEPPER') : '';
         return hash('sha256', $validator . $pepper);
     }
 
