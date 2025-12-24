@@ -20,6 +20,8 @@
     .notif-empty { padding: 12px; color: #666; }
     .logo { font-weight: 700; color: #00a8ff; text-decoration: none; }
     header nav { display: flex; gap: 12px; align-items: center; }
+    .nav-icon { font-size: 18px; padding:6px; border-radius:6px; color:inherit; text-decoration:none; }
+    .nav-icon:hover { background: rgba(255,255,255,0.03); }
     </style>
 </head>
 <body>
@@ -40,7 +42,11 @@
     <header>
         <a href="<?= BASE_URL ?>/" class="logo">🚀 Innovate</a>
         <nav>
+                <form action="<?= BASE_URL ?>/search" method="GET" style="display:inline-block;margin-right:10px;">
+                    <input type="text" name="q" placeholder="Search..." style="padding:6px 10px;border-radius:18px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff;min-width:180px;" />
+                </form>
             <a href="<?= BASE_URL ?>/">Home</a>
+            <a href="<?= BASE_URL ?>/settings" title="Settings" class="nav-icon settings">⚙️</a>
             <a href="<?= BASE_URL ?>/ideas">💡 Ideas</a>
             <a href="<?= BASE_URL ?>/investments">💰 Investments</a>
             <a href="<?= BASE_URL ?>/jobs">💼 Offers</a>
