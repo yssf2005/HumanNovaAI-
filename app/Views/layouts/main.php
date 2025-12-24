@@ -18,8 +18,7 @@
     .notif-item.unread { background: #f7fbff; }
     .notif-item small { color: #888; display:block; margin-top:6px; }
     .notif-empty { padding: 12px; color: #666; }
-    .logo { font-weight: 700; color: #00a8ff; text-decoration: none; display:inline-flex; align-items:center; }
-    .logo img { height:36px; display:block; }
+    .logo { font-weight: 700; color: #00a8ff; text-decoration: none; }
     header nav { display: flex; gap: 12px; align-items: center; }
     .nav-icon { font-size: 18px; padding:6px; border-radius:6px; color:inherit; text-decoration:none; }
     .nav-icon:hover { background: rgba(255,255,255,0.03); }
@@ -41,7 +40,7 @@
     ?>
 
     <header>
-        <a href="<?= BASE_URL ?>/" class="logo"><img src="<?= BASE_URL ?>/images/site-logo.png" alt="Innovate"></a>
+        <a href="<?= BASE_URL ?>/" class="logo">🚀 Innovate</a>
         <nav>
             <form action="<?= BASE_URL ?>/search" method="GET" style="display:inline-block;margin-right:10px;vertical-align:middle;">
                 <input type="text" name="q" placeholder="🔍 Search..." style="padding:6px 10px;border-radius:18px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff;min-width:180px;" />
