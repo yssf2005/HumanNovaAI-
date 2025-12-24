@@ -492,6 +492,22 @@ tr:hover td {
     border: 1px solid rgba(255,255,255,0.06);
     background-color: #fff;
 }
+
+/* 3D and animation */
+.gestions-section { perspective: 1400px; }
+.gestion-card { transform-style: preserve-3d; backface-visibility: hidden; transition: transform 600ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease; }
+.gestion-card.in-view { opacity: 1; transform: translateZ(0); }
+.gestion-card { opacity: 0; }
+
+@keyframes card-entrance {
+    from { opacity: 0; transform: translateY(28px) scale(.995); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.in-view { }
+.in-view .gestion-card { animation: card-entrance 600ms cubic-bezier(.2,.9,.2,1) both; }
+
+.gestion-card:hover { box-shadow: 0 30px 70px rgba(2,6,23,0.45); }
+.card-preview { transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 420ms; transform-origin: center center; }
 .gestion-card h3 { margin: 0 0 8px; color: #fff; font-size: 1.6rem; line-height:1.08; }
 .gestion-card p { margin: 0 0 12px; color: #bfc8d9; font-size: 1rem; }
 .gestion-card p.muted { color: rgba(191,200,217,0.9); font-size:0.88rem; margin-bottom: 10px; }

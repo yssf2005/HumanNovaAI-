@@ -8,6 +8,9 @@
     </div>
 </section>
 
+<!-- include homepage animations script -->
+<script src="<?= BASE_URL ?>/js/home-animations.js"></script>
+
 <!-- Gestions Cards -->
 <section class="gestions-section">
     <h2>Management Areas</h2>
