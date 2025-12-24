@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="48" viewBox="0 0 280 48">
+  <rect width="100%" height="100%" fill="none" />
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#00d4ff" />
+      <stop offset="1" stop-color="#00a8ff" />
+    </linearGradient>
+  </defs>
+  <g fill="url(#g)" font-family="Poppins,Arial, Helvetica, sans-serif" font-weight="700" font-size="32">
+    <text x="44" y="34">INNOVATE</text>
+  </g>
+  <!-- small icon on the left -->
+  <g transform="translate(6,8)">
+    <rect x="0" y="0" width="28" height="28" rx="6" fill="#061516" stroke="#00d4ff" stroke-width="2" />
+    <circle cx="14" cy="14" r="6" fill="#00d4ff" />
+  </g>
+</svg>

@@ -100,4 +100,19 @@ class JobController extends Controller {
         }
         $this->redirect('/jobs');
     }
+
+    public function my_offers() {
+        if (!isset($_SESSION['user_id'])) {
+            $this->redirect('/login');
+        }
+        $page = max(1, intval($_GET['page'] ?? 1));
+        $perPage = 8;
+        $candModel = new \App\Models\Candidature();
+        $result = $candModel->getByUserIdPaginated($_SESSION['user_id'], $page, $perPage);
+        $this->render('jobs/my_offers', [
+            'candidatures' => $result['candidatures'],
+            'page' => $page,
+            'totalPages' => $result['totalPages']
+        ]);
+    }
 }

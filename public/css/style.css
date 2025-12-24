@@ -1,556 +1,130 @@
-/* ===========================
-   INNOVATION PLATFORM - MODERN UI
-   Red/White Theme with Animations
-   =========================== */
+/* Editorial / Art-Book design system
+    - Minimal, typographic, high-contrast
+    - Serif headlines (Playfair), Sans body (Inter)
+*/
 
-:root {
-    --primary: #e63946;
-    --primary-dark: #c1121f;
-    --secondary: #1d3557;
-    --accent: #e9c46a;
-    --success: #2a9d8f;
-    --light: #f1faee;
-    --white: #ffffff;
-    --gray: #6c757d;
-    --dark: #212529;
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
-    --transition: all 0.3s ease;
+:root{
+  --paper: #fbf8f4; /* off-white */
+  --paper-2: #f4efe6; /* warm off-white */
+  --ink: #070707;    /* near-black */
+  --muted: #6b6b67;  /* neutral gray */
+  --sepia: #efe7db;  /* subtle warm tone */
+  --accent: #000000; /* pure black for strong elements */
+  --beige: #f2eadf;
+  --white: #ffffff;
+  --gap: 28px;
+  --measure: 64ch;
+  --transition-fast: 160ms;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--light) 0%, #fff 100%);
-    min-height: 100vh;
-    animation: fadeIn 0.5s ease;
+html,body{height:100%}
+
+body{
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.6;
 }
 
 /* Enable smooth scrolling for anchor links */
-html {
-    scroll-behavior: smooth;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-/* ===========================
-   HEADER & NAVIGATION
-   =========================== */
-header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    padding: 0 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    height: 70px;
-}
-
-.logo {
-    color: var(--white);
-    font-size: 2rem;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 15px 0;
-    transition: var(--transition);
-    letter-spacing: -0.5px;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-nav a {
-    color: var(--white);
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 30px;
-    transition: var(--transition);
-    font-weight: 500;
-    font-size: 0.95rem;
-    position: relative;
-    overflow: hidden;
-}
-
-nav a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: left 0.3s ease;
-    z-index: -1;
-}
-
-nav a:hover::before {
-    left: 0;
-}
-
-nav a:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-nav form {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-}
-
-nav input[type="text"] {
-    padding: 10px 20px;
-    border-radius: 30px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    outline: none;
-    font-size: 0.9rem;
-    transition: var(--transition);
-    background: rgba(255, 255, 255, 0.95);
-    min-width: 200px;
-}
-
-nav input[type="text"]:focus {
-    border-color: var(--white);
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
-    transform: scale(1.02);
-}
-
-/* ===========================
-   CONTAINER
-   =========================== */
-.container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 20px;
-    animation: slideUp 0.5s ease;
-}
-
-/* ===========================
-   CARDS
-   =========================== */
-.card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-}
-
-.card h3 {
-    color: var(--secondary);
-    margin-bottom: 10px;
-    font-size: 1.3rem;
-}
-
-.card p {
-    color: var(--gray);
-    line-height: 1.6;
-}
-
-/* Card Grid */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 20px;
-}
-
-/* ===========================
-   BUTTONS
-   =========================== */
-.btn {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: var(--white);
-    padding: 12px 25px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: var(--transition);
-    margin: 5px 2px;
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(230, 57, 70, 0.4);
-}
-
-.btn:active {
-    transform: translateY(0);
-}
-
-.btn-secondary {
-    background: linear-gradient(135deg, var(--gray) 0%, #5a6268 100%);
-}
-
-.btn-success {
-    background: linear-gradient(135deg, var(--success) 0%, #21867a 100%);
-}
-
-.btn-warning {
-    background: linear-gradient(135deg, var(--accent) 0%, #d4a83d 100%);
-    color: var(--dark);
-}
-
-.btn-sm {
-    padding: 8px 16px;
-    font-size: 0.8rem;
-}
-
-/* ===========================
-   FORMS
-   =========================== */
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--secondary);
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: var(--transition);
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    border-color: var(--primary);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
-}
-
-/* ===========================
-   STATISTICS CARDS
-   =========================== */
-.stat-card {
-    background: linear-gradient(135deg, var(--white) 0%, var(--light) 100%);
-    border-radius: 16px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border-left: 4px solid var(--primary);
-}
-
-.stat-card:hover {
-    transform: translateY(-5px) scale(1.02);
-}
-
-.stat-card .stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary);
-    display: block;
-}
-
-.stat-card .stat-label {
-    color: var(--gray);
-    font-size: 0.9rem;
-    margin-top: 5px;
-}
-
-.stat-card .stat-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    margin: 30px 0;
-}
-
-/* ===========================
-   INSTAGRAM-STYLE BLOG
-   =========================== */
-.instagram-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.insta-post {
-    background: var(--white);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.insta-post:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-hover);
-}
-
-.insta-post .post-header {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.insta-post .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.insta-post .post-image {
-    width: 100%;
-    height: 250px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 3rem;
-}
-
-.insta-post .post-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.insta-post .post-content {
-    padding: 15px;
-}
-
-.insta-post .post-actions {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-/* ===========================
-   SITE FOOTER
-   =========================== */
-.page-footer {
-    padding: 48px 12px;
-    background: linear-gradient(180deg,#071029 0%, #0b1220 100%);
-    color: #e6eef8;
-    border-top: 1px solid rgba(255,255,255,0.03);
-    margin-top: 28px;
-}
-.page-footer .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-.page-footer .footer-col { min-width: 180px; }
-.page-footer h3 { margin:0 0 8px 0; color:#00e0ff; letter-spacing:0.6px; }
-.page-footer p { margin:0 0 12px 0; line-height:1.6; color:#bcd3e6; }
-.page-footer .footer-links { list-style:none; padding:0; margin:0; color:#bcd3e6; line-height:1.9 }
-.page-footer .footer-links a { color:inherit; text-decoration:none; }
-.page-footer .footer-contact a { color:#9fe7ff; text-decoration:none; }
-.page-footer .footer-social a { display:inline-block; width:36px; height:36px; background:#0b2b3a; border-radius:6px; color:#9fe7ff; text-align:center; line-height:36px; text-decoration:none; margin-right:8px; }
-
-/* ===========================
-   ABOUT SECTION (on home)
-   =========================== */
-.about-section { padding: 36px 0; }
-.about-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: var(--shadow); }
-.about-card h2 { color: var(--secondary); margin-bottom:10px; }
-.about-card p { color: var(--gray); line-height:1.6; }
-
-
-.insta-post .post-actions button,
-.insta-post .post-actions a {
-    background: none;
-    border: none;
-    font-size: 1.3rem;
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-}
-
-.insta-post .post-actions button:hover,
-.insta-post .post-actions a:hover {
-    transform: scale(1.2);
-}
-
-.insta-post .likes {
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.insta-post .caption {
-    color: var(--dark);
-    line-height: 1.5;
-}
-
-.insta-post .caption strong {
-    color: var(--secondary);
-}
-
-.insta-post .comments-section {
-    border-top: 1px solid #eee;
-    padding: 10px 15px;
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-.insta-post .comment {
-    padding: 5px 0;
-    font-size: 0.9rem;
-}
-
-.insta-post .comment strong {
-    color: var(--secondary);
-}
-
-.insta-post .add-comment {
-    display: flex;
-    border-top: 1px solid #eee;
-    padding: 10px 15px;
-}
-
-.insta-post .add-comment input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 8px;
-    font-size: 0.9rem;
-}
-
-.insta-post .add-comment button {
-    background: none;
-    border: none;
-    color: var(--primary);
-    font-weight: 600;
-    cursor: pointer;
-}
-
-/* ===========================
-   DASHBOARD WELCOME
-   =========================== */
-.dashboard-header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: var(--white);
-    padding: 40px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    box-shadow: var(--shadow);
-}
-
-.dashboard-header h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.dashboard-header p {
-    opacity: 0.9;
-}
-
-/* ===========================
-   ALERTS & MESSAGES
-   =========================== */
-.alert {
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    animation: slideUp 0.3s ease;
-}
-
-.alert-success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.alert-error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
+/* Editorial / Art-Book design system
+   - Minimal, typographic, high-contrast
+   - Serif headlines + clean sans body
+   - No heavy shadows or gradients
+*/
+
+:root{
+  --paper: #fbf8f4; /* warm off-white */
+  --paper-2: #f6f2ec; /* subtle beige */
+  --ink: #0b0b0b;    /* near-black */
+  --muted: #6f6f6b;  /* neutral gray */
+  --sepia: #efe7db;  /* subtle warm tone */
+  --white: #ffffff;
+  --gap: 28px;
+  --measure: 64ch;
+  --max-width: 1180px;
+}
+
+/* Reset and base */
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.6;
+}
+
+/* Typography system */
+h1,h2,h3,h4,h5,h6{font-family:'Playfair Display', Georgia, 'Times New Roman', serif;color:var(--ink);margin:0 0 .6rem 0}
+h1{font-size:3.2rem;line-height:1;letter-spacing:-0.6px}
+h2{font-size:2.0rem}
+h3{font-size:1.25rem}
+p,li,small,button,input,select,textarea{font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+small{color:var(--muted)}
+
+/* Layout */
+.wrap{max-width:var(--max-width);margin:0 auto;padding:22px 28px;display:flex;align-items:center;gap:var(--gap)}
+.container{max-width:var(--max-width);margin:48px auto;padding:0 28px}
+
+/* Header */
+header{position:sticky;top:0;background:transparent;padding:10px 0;z-index:999}
+.logo{display:flex;align-items:center;text-decoration:none;color:var(--ink);font-weight:700}
+.logo .logo-text{font-family:'Playfair Display', serif;font-size:1.35rem;letter-spacing:1px}
+.site-nav{margin-left:40px;display:flex;gap:20px;align-items:center}
+.site-nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;padding:.25rem 0}
+.site-nav a:hover{text-decoration:underline;text-underline-offset:6px;opacity:.95}
+
+/* Buttons */
+.btn{display:inline-block;padding:10px 20px;border-radius:2px;text-decoration:none;font-weight:700;font-size:.95rem}
+.btn-solid{background:var(--ink);color:var(--white);border:none}
+.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+
+/* Cards */
+.card{background:var(--white);padding:22px;border:1px solid rgba(11,11,11,0.06);border-radius:12px;box-shadow:0 8px 24px rgba(11,11,11,0.04);transition:transform var(--transition-fast),box-shadow var(--transition-fast);display:flex;flex-direction:column;gap:12px}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(11,11,11,0.07)}
+.card h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:6px}
+.card p{color:var(--muted);max-width:var(--measure);line-height:1.75;margin:0}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;margin-top:20px}
+
+/* Gestions / Home cards (flat, editorial) */
+.gestions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
+.gestion-card{background:var(--white);padding:18px;border:1px solid rgba(11,11,11,0.06);border-radius:10px;box-shadow:0 6px 20px rgba(11,11,11,0.03);transition:transform var(--transition-fast),box-shadow var(--transition-fast)}
+.gestion-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,11,11,0.05)}
+.gestion-card .title{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:6px}
+.gestion-card p{color:var(--muted);margin:0}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start;padding:48px 0}
+.hero .lead{max-width:var(--measure);font-size:1.05rem;color:var(--muted)}
+.hero .manifest{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ink);margin-top:16px}
+
+/* Footer */
+.page-footer{padding:48px 28px;background:transparent;color:var(--muted);margin-top:48px}
+
+/* Utilities */
+.sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+/* Responsive tweaks */
+@media (max-width:900px){.hero{grid-template-columns:1fr}.site-nav{display:none}}
+
+/* Minimal hover interactions */
+a:hover{text-decoration:underline;opacity:.95}
+
+/* Sticky header scrolled state */
+.site-header.scrolled{background: rgba(255,255,255,0.96);backdrop-filter: blur(6px);box-shadow:0 8px 28px rgba(11,11,11,0.06)}
+
+/* Ensure search input inside header sits well on small screens */
+.header-search{max-width:5000px}
+@media(max-width:800px){.header-search{position:dynamic;transform:none;width:100%;max-width:100%;margin:20px 0}}
 
-/* ===========================
-   CHATBOT WIDGET
    =========================== */
 #chatbot-widget {
     position: fixed;
@@ -868,3 +442,110 @@ h2 {
     color: var(--dark);
     transform: rotate(90deg);
 }
+
+/* -------------------------------
+     Screenshot-like minimal typographic override
+     - Monospace, high-contrast, large headings
+     - Constrain measure, generous vertical rhythm
+     ------------------------------- */
+
+/* Subtle grey background for density */
+html,body{background:#f3f3f4}
+body{font-family: 'Courier New', Courier, monospace; color:#0b0b0b; line-height:1.9}
+.container{max-width:980px;margin:64px auto;padding:0 40px}
+h1,h2,h3{font-family:'Courier New', Courier, monospace; text-transform:uppercase; letter-spacing:2px; color:#0b0b0b}
+h2{font-size:1.25rem;margin:56px 0 18px}
+h3{font-size:1rem;margin:42px 0 12px}
+p{font-size:0.98rem;color:#111;margin-bottom:28px;max-width:78ch}
+.wrap{padding:18px 40px}
+
+/* Navbar / Header */
+header{
+    background:#fafafa;
+    padding:10px 0;
+    border-bottom:1px solid rgba(11,11,11,0.06);
+    backdrop-filter: blur(2px);
+}
+.wrap{max-width:var(--max-width);margin:0 auto;padding:10px 28px;display:flex;align-items:center;position:relative}
+
+/* center the nav horizontally while keeping logo left and actions right */
+.site-nav{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:18px;
+    align-items:center;
+    z-index:1;
+}
+.site-nav a{color:#0b0b0b;padding:8px 10px;font-weight:600}
+.site-nav a:hover{text-decoration:underline}
+.logo .logo-text{font-family:'Courier New', Courier, monospace; font-weight:700}
+
+/* small inline search styling (search form placed before Home) */
+.site-nav form{display:inline-block;margin-right:8px}
+.site-nav form input{padding:6px 10px;border-radius:18px;border:1px solid rgba(11,11,11,0.06);background:transparent;min-width:160px}
+
+/* Nav icon images */
+.nav-img{width:18px;height:18px;vertical-align:middle;margin-right:8px;filter:grayscale(10%)}
+.nav-img[alt="Home"]{width:20px;height:20px}
+.notif-bell img{width:20px;height:20px}
+
+/* actions on the right (logout, bell, settings) — ensure they sit above centered nav */
+.wrap > .actions, .wrap > div[style] { margin-left:auto; z-index:2; display:flex; align-items:center; gap:12px }
+
+/* Footer */
+.page-footer{margin-top:80px;padding:36px 0;background:#efefef;color:#333;border-top:1px solid rgba(11,11,11,0.04)}
+.page-footer .footer-inner{max-width:1180px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;align-items:flex-start;gap:28px}
+.page-footer .footer-col{flex:1;min-width:220px}
+.page-footer h3{margin:0 0 12px 0;color:#0b0b0b;font-family:'Courier New', Courier, monospace}
+.page-footer h4{margin:0 0 8px 0;color:#333;font-family:'Courier New', Courier, monospace;font-size:0.95rem}
+.page-footer .footer-links{list-style:none;padding:0;margin:0}
+.page-footer .footer-links li{margin-bottom:8px}
+.page-footer .footer-links a{color:#444}
+.page-footer p, .page-footer a{color:#555}
+
+/* Cards */
+.card, .gestion-card{border:none;padding:0}
+
+/* Reduce visual chrome */
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline}
+
+@media (max-width:800px){
+    .container{padding:0 20px;margin:36px auto}
+    h2{font-size:1.1rem}
+    .page-footer .wrap{flex-direction:column;align-items:flex-start}
+    .site-nav{position:static;transform:none;margin:12px 0;display:flex;flex-wrap:wrap;justify-content:center}
+    .wrap > .actions, .wrap > div[style] { margin-left:0 }
+}
+
+/* Dropdown styles for header nav */
+.nav-dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(11,11,11,0.06);border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.08);min-width:180px;z-index:50;padding:6px 0}
+.dropdown-menu a{display:block;padding:8px 14px;color:#0b0b0b;white-space:nowrap}
+.dropdown-menu a:hover{background:#f6f6f6}
+.nav-dropdown:hover .dropdown-menu{display:block}
+.dropdown-menu.open{display:block}
+
+@media (max-width:800px){
+    .dropdown-menu{position:static;transform:none;box-shadow:none;border-radius:4px;padding:6px 0}
+}
+
+/* Chatbot overrides: fixed, movable, compact */
+#chatbot-widget{position:fixed;right:24px;bottom:24px;left:auto!important;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+#chatbot-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;color:#fff;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.18);font-size:22px}
+#chatbot-window{display:none;position:fixed;right:24px;left:auto!important;bottom:92px;width:340px;max-width:90vw;background:#fff;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,0.18);overflow:hidden}
+#chatbot-window.open{display:block}
+#chatbot-header{background:#0b0b0b;color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+#chatbot-messages{height:280px;overflow-y:auto;padding:14px;background:#fafafa}
+#chatbot-input{display:flex;padding:10px;border-top:1px solid #eee}
+#chatbot-input input{flex:1;padding:10px 12px;border-radius:20px;border:1px solid #ddd}
+#chatbot-input .btn{padding:8px 12px}
+
+/* When user moves the widget, we set inline left/top; ensure window positions follow */
+#chatbot-widget.moving #chatbot-window{display:block}
+
+/* Ensure footer has room for fixed widgets on small screens */
+body{padding-bottom:120px}
+

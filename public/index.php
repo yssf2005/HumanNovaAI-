@@ -55,6 +55,8 @@ $app->router->post('/investments/store', [App\Controllers\InvestmentController::
 $app->router->get('/jobs', [App\Controllers\JobController::class, 'index']);
 $app->router->get('/jobs/create', [App\Controllers\JobController::class, 'create']);
 $app->router->post('/jobs/store', [App\Controllers\JobController::class, 'store']); // Was verify in plan, assuming store
+// My offers (applications) under jobs
+$app->router->get('/jobs/my_offers', [App\Controllers\JobController::class, 'my_offers']);
 
 // Applications
 $app->router->get('/apply', [App\Controllers\CandidatureController::class, 'apply']);

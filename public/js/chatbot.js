@@ -1,94 +1,97 @@
-const chatbotIcon = document.getElementById('chatbot-icon');
-const chatbotWindow = document.getElementById('chatbot-window');
-const closeChat = document.getElementById('close-chat');
-const chatMessages = document.getElementById('chatbot-messages');
-const chatInput = document.getElementById('chat-msg');
+(function(){
+    const chatbotIcon = document.getElementById('chatbot-icon');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const closeChat = document.getElementById('close-chat');
+    const chatMessages = document.getElementById('chatbot-messages');
+    const chatInput = document.getElementById('chat-msg');
+    const widget = document.getElementById('chatbot-widget');
 
-let isChatOpen = false;
+    if (!chatbotIcon || !chatbotWindow || !chatMessages || !chatInput || !widget) return;
 
-// Toggle chatbot window
-chatbotIcon.addEventListener('click', () => {
-    isChatOpen = !isChatOpen;
-    chatbotWindow.style.display = isChatOpen ? 'block' : 'none';
+    let isChatOpen = false;
 
-    // Show welcome message on first open
-    if (isChatOpen && chatMessages.children.length === 0) {
-        addMessage('bot', 'Hello! I\'m your AI assistant. How can I help you today?');
+    // Restore saved position
+    const saved = localStorage.getItem('chatbot-pos');
+    if (saved) {
+        try {
+            const pos = JSON.parse(saved);
+            if (pos.left !== undefined) widget.style.left = pos.left + 'px';
+            if (pos.top !== undefined) widget.style.top = pos.top + 'px';
+            widget.style.right = 'auto';
+        } catch(e){}
     }
-});
 
-closeChat.addEventListener('click', () => {
-    isChatOpen = false;
-    chatbotWindow.style.display = 'none';
-});
-
-// Send message on Enter key
-chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        sendMessage();
+    function openChat(){
+        isChatOpen = true;
+        chatbotWindow.classList.add('open');
+        // welcome message
+        if (chatMessages.children.length === 0) addMessage('bot', "Hello! I'm your AI assistant. How can I help you today?");
     }
-});
+    function closeChatFn(){ isChatOpen = false; chatbotWindow.classList.remove('open'); }
 
-async function sendMessage() {
-    const message = chatInput.value.trim();
-    if (!message) return;
+    chatbotIcon.addEventListener('click', ()=>{ isChatOpen ? closeChatFn() : openChat(); });
+    closeChat.addEventListener('click', closeChatFn);
 
-    // Add user message to chat
-    addMessage('user', message);
-    chatInput.value = '';
+    chatInput.addEventListener('keypress', (e)=>{ if (e.key === 'Enter') sendMessage(); });
 
-    // Show typing indicator
-    const typingId = addMessage('bot', 'Typing...');
+    async function sendMessage(){
+        const message = chatInput.value.trim(); if (!message) return;
+        addMessage('user', message); chatInput.value = '';
+        const typingId = addMessage('bot', 'Typing...');
+        try{
+            const baseUrl = document.querySelector('script[src*="chatbot.js"]')?.src.split('/js/')[0] || '';
+            const response = await fetch(baseUrl + '/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message }) });
+            const data = await response.json();
+            const typingMsg = document.getElementById(typingId); if (typingMsg) typingMsg.remove();
+            if (data && data.success) addMessage('bot', data.message);
+            else addMessage('bot', data.message || 'Sorry, I encountered an error.');
+        }catch(err){ const typingMsg = document.getElementById(typingId); if (typingMsg) typingMsg.remove(); addMessage('bot', "Sorry, I'm having trouble connecting."); }
+    }
 
-    try {
-        // Call backend API - get BASE_URL from page
-        const baseUrl = document.querySelector('script[src*="chatbot.js"]')?.src.split('/js/')[0] || '';
-        const response = await fetch(baseUrl + '/api/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ message: message })
-        });
-
-        const data = await response.json();
-
-        // Remove typing indicator
-        const typingMsg = document.getElementById(typingId);
-        if (typingMsg) typingMsg.remove();
-
-        // Add bot response
-        if (data.success) {
-            addMessage('bot', data.message);
+    function addMessage(sender, text){
+        const messageId = 'msg-' + Date.now();
+        const messageDiv = document.createElement('div');
+        messageDiv.id = messageId;
+        messageDiv.className = 'chat-msg ' + sender;
+        messageDiv.style.maxWidth = '80%';
+        messageDiv.style.marginBottom = '12px';
+        messageDiv.style.padding = '10px 14px';
+        messageDiv.style.borderRadius = '14px';
+        messageDiv.style.wordWrap = 'break-word';
+        if (sender === 'user'){
+            messageDiv.style.background = 'linear-gradient(135deg,#e63946,#c1121f)';
+            messageDiv.style.color = '#fff'; messageDiv.style.marginLeft = 'auto'; messageDiv.style.textAlign = 'right';
         } else {
-            addMessage('bot', data.message || 'Sorry, I encountered an error. Please try again.');
+            messageDiv.style.background = '#f1f1f1'; messageDiv.style.color = '#222';
         }
-    } catch (error) {
-        // Remove typing indicator
-        const typingMsg = document.getElementById(typingId);
-        if (typingMsg) typingMsg.remove();
-
-        addMessage('bot', 'Sorry, I\'m having trouble connecting. Please try again later.');
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return messageId;
     }
-}
 
-function addMessage(sender, text) {
-    const messageId = 'msg-' + Date.now();
-    const messageDiv = document.createElement('div');
-    messageDiv.id = messageId;
-    messageDiv.style.cssText = `
-        margin-bottom: 12px;
-        padding: 10px 15px;
-        border-radius: 15px;
-        max-width: 80%;
-        word-wrap: break-word;
-        ${sender === 'user'
-            ? 'background: linear-gradient(135deg, #e63946, #c1121f); color: white; margin-left: auto; text-align: right;'
-            : 'background: #f1f1f1; color: #333;'}
-    `;
-    messageDiv.textContent = text;
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    return messageId;
-}
+    // Simple drag-to-move behavior
+    let dragging = false, dragOffset = {x:0,y:0};
+    chatbotIcon.addEventListener('pointerdown', (e)=>{
+        dragging = true; widget.classList.add('moving');
+        const rect = widget.getBoundingClientRect();
+        dragOffset.x = e.clientX - rect.left; dragOffset.y = e.clientY - rect.top;
+        chatbotIcon.setPointerCapture(e.pointerId);
+    });
+    document.addEventListener('pointermove', (e)=>{
+        if (!dragging) return;
+        e.preventDefault();
+        const left = e.clientX - dragOffset.x; const top = e.clientY - dragOffset.y;
+        widget.style.left = Math.max(8, Math.min(window.innerWidth - widget.offsetWidth - 8, left)) + 'px';
+        widget.style.top = Math.max(8, Math.min(window.innerHeight - widget.offsetHeight - 8, top)) + 'px';
+        widget.style.right = 'auto'; widget.style.bottom = 'auto';
+        chatbotWindow.style.right = 'auto'; chatbotWindow.style.bottom = 'auto';
+    });
+    document.addEventListener('pointerup', (e)=>{
+        if (!dragging) return; dragging = false; widget.classList.remove('moving');
+        // persist position
+        const rect = widget.getBoundingClientRect();
+        localStorage.setItem('chatbot-pos', JSON.stringify({ left: Math.round(rect.left), top: Math.round(rect.top) }));
+        try{ chatbotIcon.releasePointerCapture && chatbotIcon.releasePointerCapture(e.pointerId); }catch(e){}
+    });
+})();

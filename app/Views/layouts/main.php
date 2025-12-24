@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/home-theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Poppins', sans-serif; }</style>
     <style>
+    body { font-family: 'Poppins', sans-serif; }
+
     /* Notifications UI */
     .notif-bell { position: relative; display: inline-block; margin-right: 12px; cursor: pointer; }
     .notif-bell .badge { position: absolute; top: -6px; right: -6px; background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; }
@@ -18,8 +19,15 @@
     .notif-item.unread { background: #f7fbff; }
     .notif-item small { color: #888; display:block; margin-top:6px; }
     .notif-empty { padding: 12px; color: #666; }
+
     .logo { font-weight: 700; color: #00a8ff; text-decoration: none; }
-    header nav { display: flex; gap: 12px; align-items: center; }
+    .site-header{display:flex;align-items:center;gap:12px;padding:8px 12px;transition:box-shadow .18s ease,background .18s ease,backdrop-filter .18s ease}
+    .site-header nav { display: flex; gap: 12px; align-items: center; flex:1 }
+    .nav-links{margin-left:auto;display:flex;gap:12px;align-items:center;transform:translateX(-6px);transition:transform .14s ease}
+    .nav-actions{display:flex;align-items:center;gap:10px;transform:translateX(-4px)}
+    /* center the search visually without reordering DOM (slightly left-shifted for balance) */
+    .header-search{position:absolute;left:49%;transform:translateX(-53%);width:420px;max-width:56%;transition:transform .14s ease,left .14s ease}
+    .header-search input{width:100%;padding:8px 12px;border-radius:18px;border:1px solid rgba(0,0,0,0.08);outline:none}
     .nav-icon { font-size: 18px; padding:6px; border-radius:6px; color:inherit; text-decoration:none; }
     .nav-icon:hover { background: rgba(255,255,255,0.03); }
     </style>
@@ -39,24 +47,37 @@
     }
     ?>
 
-    <header>
+    <header class="site-header">
         <a href="<?= BASE_URL ?>/" class="logo">🚀 Innovate</a>
         <nav>
-            <form action="<?= BASE_URL ?>/search" method="GET" style="display:inline-block;margin-right:10px;vertical-align:middle;">
-                <input type="text" name="q" placeholder="🔍 Search..." style="padding:6px 10px;border-radius:18px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#fff;min-width:180px;" />
+            <form action="<?= BASE_URL ?>/search" method="GET" class="header-search" aria-label="Site search">
+                <input type="text" name="q" placeholder="Search ideas..." />
             </form>
-            <a href="<?= BASE_URL ?>/">Home</a>
-            <a href="<?= BASE_URL ?>/ideas">💡 Ideas</a>
-            <a href="<?= BASE_URL ?>/investments">💰 Investments</a>
-            <a href="<?= BASE_URL ?>/jobs">💼 Offers</a>
-            <a href="<?= BASE_URL ?>/events">📅 Events</a>
-            <a href="<?= BASE_URL ?>/feed">📸 Blog</a>
+            <div class="nav-links">
+                <a href="<?= BASE_URL ?>/"><img src="<?= BASE_URL ?>/images/home.svg" alt="Home" class="nav-img"> Home</a>
+                <div class="nav-dropdown">
+                    <a href="<?= BASE_URL ?>/ideas" class="drop-toggle"><img src="<?= BASE_URL ?>/images/idea.svg" alt="Ideas" class="nav-img"> Ideas ▾</a>
+                    <div class="dropdown-menu" aria-hidden="true">
+                        <a href="<?= BASE_URL ?>/ideas"><img src="<?= BASE_URL ?>/images/idea.svg" alt="Ideas" class="nav-img"> All Ideas</a>
+                        <a href="<?= BASE_URL ?>/investments"><img src="<?= BASE_URL ?>/images/money-bag.svg" alt="Investments" class="nav-img"> Investments</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="<?= BASE_URL ?>/jobs" class="drop-toggle"><img src="<?= BASE_URL ?>/images/briefcase.svg" alt="Offers" class="nav-img"> Offers ▾</a>
+                    <div class="dropdown-menu" aria-hidden="true">
+                        <a href="<?= BASE_URL ?>/jobs"><img src="<?= BASE_URL ?>/images/briefcase.svg" alt="Offers" class="nav-img"> All Offers</a>
+                        <a href="<?= BASE_URL ?>/jobs/my_offers"><img src="<?= BASE_URL ?>/images/briefcase.svg" alt="My Offers" class="nav-img"> My Offers</a>
+                    </div>
+                </div>
+                <a href="<?= BASE_URL ?>/events"><img src="<?= BASE_URL ?>/images/calendar.svg" alt="Events" class="nav-img"> Events</a>
+                <a href="<?= BASE_URL ?>/feed"><img src="<?= BASE_URL ?>/images/magnifier.svg" alt="Blog" class="nav-img"> Blog</a>
+            </div>
             
 
             <?php if (isset($_SESSION['user_id'])): ?>
-                <div style="margin-left:auto;display:flex;align-items:center;gap:10px;position:relative;">
+                <div class="nav-actions" style="display:flex;align-items:center;gap:10px;position:relative;z-index:5;">
                     <div class="notif-bell" id="notif-bell" title="Notifications">
-                        <span style="font-size:20px;">🔔</span>
+                        <img src="<?= BASE_URL ?>/images/alarm.svg" alt="Notifications" style="width:20px;height:20px"> 
                         <?php if ($notifUnread > 0): ?>
                             <span class="badge" id="notif-count"><?= $notifUnread ?></span>
                         <?php else: ?>
@@ -77,7 +98,7 @@
                         </div>
                     </div>
                     <a href="<?= BASE_URL ?>/logout">Logout</a>
-                    <a href="<?= BASE_URL ?>/settings" class="nav-icon" title="Settings" style="margin-left:6px;">⚙️</a>
+                    <a href="<?= BASE_URL ?>/settings" class="nav-icon" title="Settings" style="margin-left:6px;"><img src="<?= BASE_URL ?>/images/settings.svg" alt="Settings" style="width:18px;height:18px"></a>
                 </div>
             <?php else: ?>
                 <div style="margin-left:auto;display:flex;gap:10px;align-items:center;">
@@ -194,6 +215,37 @@
                 }
             }
         });
+    })();
+    </script>
+    <script>
+    // Dropdown toggle (click to open for touch devices)
+    (function(){
+        document.querySelectorAll('.drop-toggle').forEach(function(toggle){
+            toggle.addEventListener('click', function(e){
+                // on small screens, toggle the menu
+                const menu = toggle.nextElementSibling;
+                if (!menu) return;
+                menu.classList.toggle('open');
+                e.preventDefault();
+            });
+        });
+        document.addEventListener('click', function(e){
+            if (!e.target.closest('.nav-dropdown')) {
+                document.querySelectorAll('.dropdown-menu.open').forEach(m=>m.classList.remove('open'));
+            }
+        });
+    })();
+    </script>
+    <script>
+    (function(){
+        var header = document.querySelector('.site-header');
+        if (!header) return;
+        function onScroll(){
+            if (window.pageYOffset > 8) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        }
+        window.addEventListener('scroll', onScroll, {passive:true});
+        onScroll();
     })();
     </script>
     <script src="<?= BASE_URL ?>/js/chatbot.js"></script>
