@@ -16,7 +16,7 @@
     <h2>Management Areas</h2>
     <div class="gestions-grid">
         <div class="gestion-card bg-pink">
-            <div class="card-preview" style="background-image: url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1200&auto=format&fit=crop')" aria-hidden="true"></div>
+            <div class="card-preview" style="background-image: url('https://source.unsplash.com/featured/?brainstorm,idea,innovation')" aria-hidden="true"></div>
             <div class="card-content">
                 <h3>Ideas Management</h3>
                 <p>Capture, refine and prioritize ideas. Invite collaborators, collect feedback, and track the status of proposals as they move from concept to validated project.</p>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="gestion-card bg-yellow">
-            <div class="card-preview" style="background-image: url('https://images.unsplash.com/photo-1603575448360-7f0a7a9a6b7a?q=80&w=1200&auto=format&fit=crop')" aria-hidden="true"></div>
+            <div class="card-preview" style="background-image: url('https://source.unsplash.com/featured/?investment,finance,startup')" aria-hidden="true"></div>
             <div class="card-content">
                 <h3>Investments</h3>
                 <p>Discover vetted projects and manage funding activities. Track commitments, monitor ROI, and coordinate investment rounds with contributors and founders.</p>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="gestion-card bg-green">
-            <div class="card-preview" style="background-image: url('https://images.unsplash.com/photo-1503424886301-1a0b6a7c9f0e?q=80&w=1200&auto=format&fit=crop')" aria-hidden="true"></div>
+            <div class="card-preview" style="background-image: url('https://source.unsplash.com/featured/?conference,event,workshop')" aria-hidden="true"></div>
             <div class="card-content">
                 <h3>Events Management</h3>
                 <p>Plan and promote events, manage registrations, and engage attendees. Use event pages, ticketing, and attendee lists to run meetups, workshops, and conferences.</p>
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="gestion-card bg-blue">
-            <div class="card-preview" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop')" aria-hidden="true"></div>
+            <div class="card-preview" style="background-image: url('https://source.unsplash.com/featured/?jobs,hiring,recruitment')" aria-hidden="true"></div>
             <div class="card-content">
                 <h3>Jobs & Hiring</h3>
                 <p>Post roles, manage applications, and communicate with candidates. Build talent pipelines and shortlist applicants with integrated CV review features.</p>
@@ -54,7 +54,7 @@
         
         <!-- Contact card -->
         <div class="gestion-card bg-blue">
-            <div class="card-preview" style="background-image: url('https://images.unsplash.com/photo-1526378727286-50a66f0f4b6a?q=80&w=1200&auto=format&fit=crop')" aria-hidden="true"></div>
+            <div class="card-preview" style="background-image: url('https://source.unsplash.com/featured/?support,helpdesk,contact')" aria-hidden="true"></div>
             <div class="card-content">
                 <h3>Contact Us</h3>
                 <p>Need help or want to talk partnerships? Reach our support and partnerships team for assistance.</p>
@@ -65,7 +65,7 @@
 
         <!-- Privacy card -->
         <div class="gestion-card bg-pink">
-            <div class="card-preview" style="background-image: url('https://images.unsplash.com/photo-1508780709619-79562169bc64?q=80&w=1200&auto=format&fit=crop')" aria-hidden="true"></div>
+            <div class="card-preview" style="background-image: url('https://source.unsplash.com/featured/?privacy,security,data')" aria-hidden="true"></div>
             <div class="card-content">
                 <h3>Privacy & Terms</h3>
                 <p>Learn about how we protect your data and the terms that govern platform usage. We prioritize security and transparency.</p>
