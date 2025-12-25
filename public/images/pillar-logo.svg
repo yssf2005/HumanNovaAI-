@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Clean PILLAR wordmark SVG (pillars removed) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" width="300" height="60" role="img" aria-label="PILLAR logo">
+  <defs>
+    <style>
+      .word { font-family: 'Playfair Display', serif; font-weight:700; fill:#0b0b0b; }
+    </style>
+  </defs>
+  <g transform="translate(0,10)">
+    <text x="28" y="86" font-size="64" class="word">PILLAR</text>
+  </g>
+</svg>

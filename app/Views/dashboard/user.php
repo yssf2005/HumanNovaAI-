@@ -1,7 +1,7 @@
 <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center;">
     <div>
         <h2>👋 Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>!</h2>
-        <p>Here's your activity overview on the Innovation Platform</p>
+        <p>Here's your activity overview on PILLAR</p>
     </div>
     <a href="<?= BASE_URL ?>/profile" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 5px;">
         ⚙️ Edit Profile

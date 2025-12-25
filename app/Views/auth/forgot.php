@@ -19,11 +19,4 @@
     </div>
 </div>
 
-<style>
-/* reuse small portion of auth styles to keep it consistent */
-.auth-container{max-width:450px;margin:80px auto}
-.auth-card{background:#2a2d4e;padding:40px;border-radius:15px;color:#fff}
-.auth-title{text-align:center;margin-bottom:20px}
-.auth-field input{width:100%;padding:12px;border-radius:8px;border:none}
-.auth-submit{width:100%;padding:12px;border-radius:8px;background:linear-gradient(to right,#7d84ff,#5b64e8);border:none;color:#fff}
-</style>
+<!-- auth styles moved to global stylesheet for consistency -->

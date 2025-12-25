@@ -1,46 +1,46 @@
 <div class="auth-container">
-    <div class="auth-card">
-        <h2 class="auth-title">Bienvenue sur votre plateforme de gestion intelligente</h2>
+        <div class="auth-card">
+                <h2 class="auth-title">Bienvenue sur votre plateforme de gestion intelligente</h2>
 
-        <div class="auth-tabs">
-            <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Connexion</button>
-            <button id="tab-register" class="auth-tab" onclick="goRegister()">Inscription</button>
+                <div class="auth-tabs">
+                        <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Connexion</button>
+                        <button id="tab-register" class="auth-tab" onclick="goRegister()">Inscription</button>
+                </div>
+
+                <?php if (isset($error)): ?>
+                        <div class="alert alert-error" style="margin: 15px 0;"><?= htmlspecialchars($error) ?></div>
+                <?php endif; ?>
+
+                <form id="login-form" action="<?= BASE_URL ?>/login" method="POST">
+                        <div class="auth-field">
+                                <label>EMAIL</label>
+                                <input type="email" name="email" autocomplete="email" placeholder="helloworld@gmail.com" required>
+                        </div>
+                        <div class="auth-field">
+                                <label>MOT DE PASSE</label>
+                                <input type="password" name="password" autocomplete="current-password" placeholder="••••••••••••" required>
+                        </div>
+                        <div style="text-align: right; margin-bottom: 20px;">
+                                <a href="<?= BASE_URL ?>/forgot" style="color: #7d84ff; font-size: 0.9rem; text-decoration: none;">Mot de passe oublié ?</a>
+                        </div>
+                        <button type="submit" class="auth-submit">SE CONNECTER</button>
+                </form>
         </div>
-
-        <?php if (isset($error)): ?>
-            <div class="alert alert-error" style="margin: 15px 0;"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
-
-        <form id="login-form" action="<?= BASE_URL ?>/login" method="POST">
-            <div class="auth-field">
-                <label>EMAIL</label>
-                <input type="email" name="email" autocomplete="email" placeholder="helloworld@gmail.com" required>
-            </div>
-            <div class="auth-field">
-                <label>MOT DE PASSE</label>
-                <input type="password" name="password" autocomplete="current-password" placeholder="••••••••••••" required>
-            </div>
-            <div style="text-align: right; margin-bottom: 20px;">
-                <a href="<?= BASE_URL ?>/forgot" style="color: #7d84ff; font-size: 0.9rem; text-decoration: none;">Mot de passe oublié ?</a>
-            </div>
-            <button type="submit" class="auth-submit">SE CONNECTER</button>
-        </form>
-    </div>
 </div>
 
 <script>
 function switchAuthTab(type) {
-    // purely visual here; keep the login tab active by default
-    const loginTab = document.getElementById('tab-login');
-    const registerTab = document.getElementById('tab-register');
-    if (type === 'login') {
-        loginTab.classList.add('active');
-        registerTab.classList.remove('active');
-    }
+        // purely visual here; keep the login tab active by default
+        const loginTab = document.getElementById('tab-login');
+        const registerTab = document.getElementById('tab-register');
+        if (type === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+        }
 }
 
 function goRegister() {
-    window.location.href = "<?= BASE_URL ?>/register";
+        window.location.href = "<?= BASE_URL ?>/register";
 }
 
 // Ensure login tab is active on load
