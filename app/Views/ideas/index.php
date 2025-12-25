@@ -1,6 +1,9 @@
 <div class="section-header">
     <h2>💡 Innovation Ideas</h2>
-    <a href="<?= BASE_URL ?>/ideas/create" class="btn">+ Submit Idea</a>
+    <div style="display:flex;gap:8px;align-items:center;">
+        <a href="<?= BASE_URL ?>/ideas/create" class="btn">+ Submit Idea</a>
+        <button type="button" class="btn modal-trigger" data-modal="ideaModal">Quick Submit</button>
+    </div>
 </div>
 
 <!-- Search -->
@@ -59,3 +62,16 @@
     <?php endfor; ?>
 </div>
 <?php endif; ?>
+
+<!-- Idea modal (quick-submit) -->
+<div class="modal large" id="ideaModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-inner">
+        <button class="close-btn" data-close>&times;</button>
+        <h3>Submit an Idea</h3>
+        <form method="post" action="<?= BASE_URL ?>/ideas/store">
+            <label>Title<br><input name="title" required></label>
+            <label>Description<br><textarea name="description" rows="6" required></textarea></label>
+            <div style="margin-top:12px;"><button class="btn btn-solid" type="submit">Submit</button> <button type="button" class="btn" data-close>Cancel</button></div>
+        </form>
+    </div>
+</div>

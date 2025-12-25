@@ -63,6 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Delegated handler as a fallback: open modal when any .modal-trigger is clicked
+    document.addEventListener('click', (e) => {
+        const t = e.target.closest && e.target.closest('.modal-trigger');
+        if (!t) return;
+        e.preventDefault();
+        const id = t.dataset && t.dataset.modal;
+        if (id) openModal(id);
+    });
+
     document.addEventListener('click', (e) => {
         if (e.target.matches('[data-close]')) {
             closeModal(e.target);

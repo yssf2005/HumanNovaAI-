@@ -1,6 +1,9 @@
 <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
     <h2>📅 Events</h2>
-    <a href="<?= BASE_URL ?>/events/create" class="btn">+ Create Event</a>
+    <div style="display:flex;gap:8px;align-items:center;">
+        <a href="<?= BASE_URL ?>/events/create" class="btn">+ Create Event</a>
+        <button type="button" class="btn modal-trigger" data-modal="eventModal">Quick Create</button>
+    </div>
 </div>
 
 <!-- Search -->
@@ -75,3 +78,18 @@
 <?php else: ?>
     <div class="card" style="text-align:center;padding:20px;">No past events found.</div>
 <?php endif; ?>
+
+<!-- Event modal (quick-create) -->
+<div class="modal large" id="eventModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-inner">
+    <button class="close-btn" data-close>&times;</button>
+    <h3>Create an Event</h3>
+    <form method="post" action="<?= BASE_URL ?>/events/store">
+      <label>Title<br><input name="title" required></label>
+      <label>Date<br><input type="datetime-local" name="date"></label>
+      <label>Location<br><input name="location"></label>
+      <label>Description<br><textarea name="description" rows="6" required></textarea></label>
+      <div style="margin-top:12px;"><button class="btn btn-solid" type="submit">Create</button> <button type="button" class="btn" data-close>Cancel</button></div>
+    </form>
+  </div>
+</div>

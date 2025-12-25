@@ -1,6 +1,9 @@
 <div class="section-header">
     <h2>💼 Career Opportunities</h2>
-    <a href="<?= BASE_URL ?>/jobs/create" class="btn">+ Post Job</a>
+    <div style="display:flex;gap:8px;align-items:center;">
+        <a href="<?= BASE_URL ?>/jobs/create" class="btn">+ Post Job</a>
+        <button type="button" class="btn modal-trigger" data-modal="jobModal">Quick Post</button>
+    </div>
 </div>
 
 <!-- Search and Filter -->
@@ -59,6 +62,29 @@
     <p><?= !empty($search) || !empty($category) ? 'Try adjusting your filters.' : 'Check back later for new opportunities.' ?></p>
 </div>
 <?php endif; ?>
+
+<!-- Job modal (quick-post) -->
+<div class="modal large" id="jobModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-inner">
+        <button class="close-btn" data-close>&times;</button>
+        <h3>Create a Job</h3>
+        <form method="post" action="<?= BASE_URL ?>/jobs/store">
+            <label>Title<br><input name="title" required></label>
+            <label>Company<br><input name="company"></label>
+            <label>Category<br>
+                <select name="category">
+                    <option value="">Select</option>
+                    <option>Technology</option>
+                    <option>Marketing</option>
+                    <option>Finance</option>
+                    <option>Design</option>
+                </select>
+            </label>
+            <label>Description<br><textarea name="description" rows="6" required></textarea></label>
+            <div style="margin-top:12px;"><button class="btn btn-solid" type="submit">Create</button> <button type="button" class="btn" data-close>Cancel</button></div>
+        </form>
+    </div>
+</div>
 
 <!-- Pagination -->
 <?php if (isset($totalPages) && $totalPages > 1): ?>

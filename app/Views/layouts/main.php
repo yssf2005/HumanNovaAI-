@@ -126,6 +126,9 @@
     include_once __DIR__ . '/footer.php';
     ?>
 
+    <!-- Global modal backdrop for site-wide modals -->
+    <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true"></div>
+
     <!-- Chatbot Widget -->
     <div id="chatbot-widget">
         <div id="chatbot-icon">💬</div>
@@ -249,5 +252,6 @@
     })();
     </script>
     <script src="<?= BASE_URL ?>/js/chatbot.js"></script>
+    <script src="<?= BASE_URL ?>/js/home-animations.js"></script>
 </body>
 </html>
