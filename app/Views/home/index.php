@@ -94,7 +94,7 @@
     <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true"></div>
 
     <!-- Idea modal -->
-    <div class="modal" id="ideaModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal large" id="ideaModal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-inner">
             <button class="close-btn" data-close>&times;</button>
             <h3>Submit an Idea</h3>
@@ -107,7 +107,7 @@
     </div>
 
     <!-- Job modal -->
-    <div class="modal" id="jobModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal large" id="jobModal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-inner">
             <button class="close-btn" data-close>&times;</button>
             <h3>Create a Job</h3>
@@ -121,7 +121,7 @@
     </div>
 
     <!-- Event modal -->
-    <div class="modal" id="eventModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal large" id="eventModal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-inner">
             <button class="close-btn" data-close>&times;</button>
             <h3>Create an Event</h3>
