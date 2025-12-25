@@ -61,4 +61,62 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.transition = 'transform 600ms cubic-bezier(.2,.9,.2,1)';
         });
     });
+
+    /* Modal handling: open/close by id, backdrop, escape key */
+    const backdrop = document.getElementById('modalBackdrop');
+    const openModal = (id) => {
+        const m = document.getElementById(id);
+        if (!m || !backdrop) return;
+        m.classList.add('open');
+        m.setAttribute('aria-hidden', 'false');
+        backdrop.classList.add('open');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+    const closeModal = (el) => {
+        const m = el.closest('.modal') || document.querySelector('.modal.open');
+        if (!m || !backdrop) return;
+        m.classList.remove('open');
+        m.setAttribute('aria-hidden', 'true');
+        backdrop.classList.remove('open');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('.modal-trigger').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = btn.dataset.modal;
+            if (id) openModal(id);
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.matches('[data-close]')) {
+            closeModal(e.target);
+        }
+    });
+
+    if (backdrop) {
+        backdrop.addEventListener('click', () => {
+            const open = document.querySelector('.modal.open');
+            if (open) closeModal(open);
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const open = document.querySelector('.modal.open');
+            if (open) closeModal(open);
+        }
+    });
+
+    // Image error fallback: if a featured image fails to load, show a neutral placeholder state
+    document.querySelectorAll('.card-figure img').forEach(img => {
+        img.addEventListener('error', () => {
+            const fig = img.parentNode;
+            if (!fig) return;
+            img.style.display = 'none';
+            fig.classList.add('img-missing');
+        });
+    });
 });

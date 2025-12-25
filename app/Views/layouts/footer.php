@@ -9,6 +9,7 @@
         <div class="footer-col">
             <h4 style="margin:0 0 8px 0;color:#f8fafc;font-size:15px">Explore</h4>
             <ul class="footer-links">
+                <li><a href="<?= BASE_URL ?>#about">About</a></li>
                 <?php
                 $links = json_decode(FOOTER_LINKS_JSON, true);
                 if (is_array($links)) {
