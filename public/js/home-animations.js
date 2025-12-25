@@ -23,34 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         io.observe(c);
     });
 
-    // 3D tilt effect per card on mousemove
-    const maxRotate = 9; // degrees
-    grid.addEventListener('mousemove', (e) => {
-        const rect = grid.getBoundingClientRect();
-        const gx = e.clientX - rect.left;
-        const gy = e.clientY - rect.top;
-
-        cards.forEach(card => {
-            const r = card.getBoundingClientRect();
-            const cx = r.left + r.width/2;
-            const cy = r.top + r.height/2;
-            const rx = (e.clientY - cy) / (r.height/2);
-            const ry = (e.clientX - cx) / (r.width/2);
-            const rotX = Math.max(Math.min(-rx * maxRotate, maxRotate), -maxRotate);
-            const rotY = Math.max(Math.min(ry * maxRotate, maxRotate), -maxRotate);
-            card.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(6px)`;
-            const preview = card.querySelector('.card-preview');
-            if (preview) preview.style.transform = `translateZ(26px) scale(1.02)`;
-        });
-    });
-
-    grid.addEventListener('mouseleave', () => {
-        cards.forEach(card => {
-            card.style.transform = '';
-            const preview = card.querySelector('.card-preview');
-            if (preview) preview.style.transform = '';
-        });
-    });
+    // 3D tilt effect removed — cards use static layout and subtle hover only
 
     // subtle hover boost per card
     cards.forEach(card => {

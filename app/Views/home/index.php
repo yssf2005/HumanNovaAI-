@@ -171,5 +171,15 @@
             <h3>Philosophy</h3>
             <p style="color:var(--muted);font-weight:600;">Strong ideas deserve strong execution. Strong execution requires the right people and the right structure. PromanageAI brings them together.</p>
         </div>
+        
+        <div class="about-card">
+            <h3>Contact</h3>
+            <p style="color:var(--muted);">Need help or partnerships? Email our team at <a href="mailto:<?= htmlspecialchars(FOOTER_EMAIL) ?>"><?= htmlspecialchars(FOOTER_EMAIL) ?></a> or visit the <a href="<?= BASE_URL ?>/contact">contact page</a>.</p>
+        </div>
+
+        <div class="about-card">
+            <h3>Privacy</h3>
+            <p style="color:var(--muted);">We prioritise privacy and data protection. Read our practices on the <a href="<?= BASE_URL ?>/privacy">privacy page</a> to learn how we handle data and requests.</p>
+        </div>
     </div>
 </section>
