@@ -32,7 +32,8 @@ class JobController extends Controller {
         if (!isset($_SESSION['user_id'])) {
             $this->redirect('/login');
         }
-        $this->render('jobs/create');
+        // Standalone create page removed; redirect to jobs list (use modal on index)
+        $this->redirect('/jobs');
     }
 
     public function store() {
@@ -48,9 +49,11 @@ class JobController extends Controller {
         
         // All jobs require approval, even from admins
         if ($jobModel->create($title, $category, $description, $company, 'pending')) {
-             $this->render('jobs/create', ['success' => 'Job submitted for approval.']);
+             $_SESSION['notification'] = ['type' => 'success', 'title' => 'Job submitted', 'message' => 'Job submitted for approval.'];
+             $this->redirect('/jobs');
         } else {
-            $this->render('jobs/create', ['error' => 'Error creating job']);
+            $_SESSION['notification'] = ['type' => 'error', 'title' => 'Error', 'message' => 'Error creating job'];
+            $this->redirect('/jobs');
         }
     }
     public function edit() {

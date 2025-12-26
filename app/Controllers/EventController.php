@@ -48,7 +48,8 @@ class EventController extends Controller {
         if (!isset($_SESSION['user_id'])) {
             $this->redirect('/login');
         }
-        $this->render('events/create');
+        // Standalone create page removed; redirect to events index (use modal on index)
+        $this->redirect('/events');
     }
 
     public function store() {
@@ -64,9 +65,11 @@ class EventController extends Controller {
         
         // All events require approval, even from admins
         if ($eventModel->create($title, $description, $date, $location, 'pending')) {
-             $this->render('events/create', ['success' => 'Event submitted for approval.']);
+             $_SESSION['notification'] = ['type' => 'success', 'title' => 'Event submitted', 'message' => 'Event submitted for approval.'];
+             $this->redirect('/events');
         } else {
-            $this->render('events/create', ['error' => 'Error creating event']);
+            $_SESSION['notification'] = ['type' => 'error', 'title' => 'Error', 'message' => 'Error creating event'];
+            $this->redirect('/events');
         }
     }
     

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/home-theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Flaticon UIcons removed (icons disabled) -->
     <style>
     body { font-family: 'Poppins', sans-serif; }
 
@@ -56,30 +57,30 @@
                 <input type="text" name="q" placeholder="Search ideas..." />
             </form>
             <div class="nav-links">
-                <a href="<?= BASE_URL ?>/"><img src="<?= BASE_URL ?>/images/home.svg" alt="Home" class="nav-img"> Home</a>
+                <a href="<?= BASE_URL ?>/">Home</a>
                 <div class="nav-dropdown">
-                    <a href="<?= BASE_URL ?>/ideas" class="drop-toggle"><img src="<?= BASE_URL ?>/images/idea.svg" alt="Ideas" class="nav-img"> Ideas ▾</a>
+                    <a href="<?= BASE_URL ?>/ideas" class="drop-toggle">Ideas ▾</a>
                     <div class="dropdown-menu" aria-hidden="true">
-                        <a href="<?= BASE_URL ?>/ideas"><img src="<?= BASE_URL ?>/images/idea.svg" alt="Ideas" class="nav-img"> All Ideas</a>
-                        <a href="<?= BASE_URL ?>/investments"><img src="<?= BASE_URL ?>/images/money-bag.svg" alt="Investments" class="nav-img"> Investments</a>
+                        <a href="<?= BASE_URL ?>/ideas">All Ideas</a>
+                        <a href="<?= BASE_URL ?>/investments">Investments</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
-                    <a href="<?= BASE_URL ?>/jobs" class="drop-toggle"><img src="<?= BASE_URL ?>/images/briefcase.svg" alt="Offers" class="nav-img"> Offers ▾</a>
+                    <a href="<?= BASE_URL ?>/jobs" class="drop-toggle">Offers ▾</a>
                     <div class="dropdown-menu" aria-hidden="true">
-                        <a href="<?= BASE_URL ?>/jobs"><img src="<?= BASE_URL ?>/images/briefcase.svg" alt="Offers" class="nav-img"> All Offers</a>
-                        <a href="<?= BASE_URL ?>/jobs/my_offers"><img src="<?= BASE_URL ?>/images/briefcase.svg" alt="My Offers" class="nav-img"> My Offers</a>
+                        <a href="<?= BASE_URL ?>/jobs">All Offers</a>
+                        <a href="<?= BASE_URL ?>/jobs/my_offers">My Offers</a>
                     </div>
                 </div>
-                <a href="<?= BASE_URL ?>/events"><img src="<?= BASE_URL ?>/images/calendar.svg" alt="Events" class="nav-img"> Events</a>
-                <a href="<?= BASE_URL ?>/feed"><img src="<?= BASE_URL ?>/images/magnifier.svg" alt="Blog" class="nav-img"> Blog</a>
+                <a href="<?= BASE_URL ?>/events">Events</a>
+                <a href="<?= BASE_URL ?>/feed">Blog</a>
             </div>
             
 
             <?php if (isset($_SESSION['user_id'])): ?>
                 <div class="nav-actions" style="display:flex;align-items:center;gap:10px;position:relative;z-index:5;">
                     <div class="notif-bell" id="notif-bell" title="Notifications">
-                        <img src="<?= BASE_URL ?>/images/alarm.svg" alt="Notifications" style="width:20px;height:20px"> 
+                        <span style="font-size:14px;line-height:1;vertical-align:middle">Notifications</span>
                         <?php if ($notifUnread > 0): ?>
                             <span class="badge" id="notif-count"><?= $notifUnread ?></span>
                         <?php else: ?>
@@ -100,7 +101,7 @@
                         </div>
                     </div>
                     <a href="<?= BASE_URL ?>/logout">Logout</a>
-                    <a href="<?= BASE_URL ?>/settings" class="nav-icon" title="Settings" style="margin-left:6px;"><img src="<?= BASE_URL ?>/images/settings.svg" alt="Settings" style="width:18px;height:18px"></a>
+                    <a href="<?= BASE_URL ?>/settings" class="nav-icon" title="Settings" style="margin-left:6px;">Settings</a>
                 </div>
             <?php else: ?>
                 <div style="margin-left:auto;display:flex;gap:10px;align-items:center;">
@@ -165,7 +166,7 @@
 
     <!-- Chatbot Widget -->
     <div id="chatbot-widget">
-        <div id="chatbot-icon">💬</div>
+        <div id="chatbot-icon">Chat</div>
         <div id="chatbot-window">
              <div id="chatbot-header">
                  <span>🤖 Assistant</span>

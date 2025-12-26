@@ -1,5 +1,5 @@
 <div class="dashboard-header">
-    <h2>👤 Edit Profile</h2>
+    <h2>Edit Profile</h2>
     <p>Update your personal information</p>
 </div>
 

@@ -1,5 +1,5 @@
 <div class="section-header">
-    <h2>💼 My Applications</h2>
+    <h2>My Applications</h2>
 </div>
 
 <?php if (empty($candidatures)): ?>
@@ -12,7 +12,7 @@
     <?php foreach ($candidatures as $c): ?>
     <div class="card">
         <h3><?= htmlspecialchars($c['job_title']) ?></h3>
-        <p style="font-weight:600;color:var(--secondary);">🏢 <?= htmlspecialchars($c['company']) ?></p>
+        <p style="font-weight:600;color:var(--secondary);"><?= htmlspecialchars($c['company']) ?></p>
         <p style="color:#666;"><?= nl2br(htmlspecialchars(substr($c['cover_letter'] ?? '', 0, 220))) ?><?php if (strlen($c['cover_letter'] ?? '') > 220) echo '...'; ?></p>
         <p style="font-size:0.85rem;color:#999;">Applied <?= date('M d, Y', strtotime($c['created_at'])) ?></p>
         <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">

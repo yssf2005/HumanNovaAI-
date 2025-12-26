@@ -1,4 +1,2 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="96" height="96" fill="none" stroke="#0b0b0b" stroke-width="1.4">
-  <path d="M8 7a4 4 0 0 1 8 0v1h1a1 1 0 0 1 1 1v3a6 6 0 0 1-6 6 6 6 0 0 1-6-6V9a1 1 0 0 1 1-1h1V7z" fill="#fff"/>
-  <text x="12" y="15" text-anchor="middle" font-size="8" fill="#0b0b0b" font-family="Arial">$</text>
-</svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" viewBox="0 0 1 1" fill="none"></svg>

@@ -1,16 +1,15 @@
 <div class="section-header">
-    <h2>💡 Innovation Ideas</h2>
+    <h2>Innovation Ideas</h2>
     <div style="display:flex;gap:8px;align-items:center;">
-        <a href="<?= BASE_URL ?>/ideas/create" class="btn">+ Submit Idea</a>
-        <button type="button" class="btn modal-trigger" data-modal="ideaModal">Quick Submit</button>
+        <button type="button" class="btn modal-trigger" data-modal="ideaModal" onclick="(function(){ if(window.Pillar && window.Pillar.openModal){ window.Pillar.openModal('ideaModal'); return; } var m=document.getElementById('ideaModal'); var b=document.getElementById('modalBackdrop'); if(m && b){ m.classList.add('open'); m.setAttribute('aria-hidden','false'); b.classList.add('open'); b.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } })();">+ Submit Idea</button>
     </div>
 </div>
 
 <!-- Search -->
 <div class="card" style="margin-bottom: 25px;">
     <form action="<?= BASE_URL ?>/ideas" method="GET" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-        <input type="text" name="search" value="<?= htmlspecialchars($search ?? '') ?>" 
-               placeholder="🔍 Search ideas..." 
+         <input type="text" name="search" value="<?= htmlspecialchars($search ?? '') ?>" 
+             placeholder="Search ideas..." 
                style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; border: 2px solid #e0e0e0;">
         <button type="submit" class="btn">Search</button>
         <?php if (!empty($search)): ?>
@@ -24,17 +23,17 @@
     <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: start;">
             <h3><?= htmlspecialchars($idea['title']) ?></h3>
-            <span class="badge badge-primary">💡 Idea</span>
+            <span class="badge badge-primary">Idea</span>
         </div>
         <p style="margin: 10px 0;"><?= nl2br(htmlspecialchars(substr($idea['description'], 0, 150))) ?>...</p>
         <p style="font-size: 0.85rem; color: #666;">
             By <strong><?= htmlspecialchars($idea['author_name'] ?? 'Unknown') ?></strong>
         </p>
         <div style="margin-top: 15px; display: flex; gap: 5px; flex-wrap: wrap;">
-            <a href="<?= BASE_URL ?>/invest?idea_id=<?= $idea['id'] ?>" class="btn btn-success btn-sm">💰 Invest</a>
+            <a href="<?= BASE_URL ?>/invest?idea_id=<?= $idea['id'] ?>" class="btn btn-success btn-sm">Invest</a>
             <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $idea['user_id'] || $_SESSION['user_role'] == 'admin')): ?>
-                <a href="<?= BASE_URL ?>/ideas/edit?id=<?= $idea['id'] ?>" class="btn btn-secondary btn-sm">✏️ Edit</a>
-                <a href="<?= BASE_URL ?>/ideas/delete?id=<?= $idea['id'] ?>" class="btn btn-sm delete-link" style="background: #e63946;">🗑️</a>
+                <a href="<?= BASE_URL ?>/ideas/edit?id=<?= $idea['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
+                <a href="<?= BASE_URL ?>/ideas/delete?id=<?= $idea['id'] ?>" class="btn btn-sm delete-link" style="background: #e63946;">Delete</a>
             <?php endif; ?>
         </div>
     </div>
@@ -45,7 +44,7 @@
 <div class="card" style="text-align: center; padding: 50px;">
     <h3>No ideas <?= !empty($search) ? 'found' : 'yet' ?>!</h3>
     <p><?= !empty($search) ? 'Try a different search term.' : 'Be the first to submit an innovative idea.' ?></p>
-    <a href="<?= BASE_URL ?>/ideas/create" class="btn" style="margin-top: 15px;">Submit Your Idea</a>
+    <button type="button" class="btn" style="margin-top: 15px;" class="modal-trigger" data-modal="ideaModal" onclick="(function(){ if(window.Pillar && window.Pillar.openModal){ window.Pillar.openModal('ideaModal'); return; } var m=document.getElementById('ideaModal'); var b=document.getElementById('modalBackdrop'); if(m && b){ m.classList.add('open'); m.setAttribute('aria-hidden','false'); b.classList.add('open'); b.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } })();">Submit Your Idea</button>
 </div>
 <?php endif; ?>
 

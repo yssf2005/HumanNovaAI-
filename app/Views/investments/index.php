@@ -1,5 +1,5 @@
 <div class="section-header">
-    <h2>💰 <?= isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ? 'All Investments' : 'My Investments' ?></h2>
+    <h2><?= isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ? 'All Investments' : 'My Investments' ?></h2>
     <a href="<?= BASE_URL ?>/ideas" class="btn">Browse Ideas to Invest</a>
 </div>
 
@@ -16,17 +16,17 @@
     <div class="card" style="border-left: 4px solid #2a9d8f;">
         <div style="display: flex; justify-content: space-between; align-items: start;">
             <h3><?= htmlspecialchars($inv['idea_title'] ?? 'Idea #' . $inv['idea_id']) ?></h3>
-            <span class="badge badge-success">💰 Investment</span>
+            <span class="badge badge-success">Investment</span>
         </div>
         <p style="font-size: 2rem; font-weight: 700; color: #2a9d8f; margin: 15px 0;">
             $<?= number_format($inv['amount'], 2) ?>
         </p>
         <p style="font-size: 0.85rem; color: #666;">
-            📅 Invested on <?= date('M d, Y', strtotime($inv['created_at'])) ?>
+            Invested on <?= date('M d, Y', strtotime($inv['created_at'])) ?>
         </p>
         <?php if (isset($inv['investor_name'])): ?>
         <p style="font-size: 0.85rem; color: #666;">
-            👤 By <?= htmlspecialchars($inv['investor_name']) ?>
+            By <?= htmlspecialchars($inv['investor_name']) ?>
         </p>
         <?php endif; ?>
     </div>

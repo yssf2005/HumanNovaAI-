@@ -1,27 +1,26 @@
 <div class="section-header">
-    <h2>💼 Career Opportunities</h2>
+    <h2>Career Opportunities</h2>
     <div style="display:flex;gap:8px;align-items:center;">
-        <a href="<?= BASE_URL ?>/jobs/create" class="btn">+ Post Job</a>
-        <button type="button" class="btn modal-trigger" data-modal="jobModal">Quick Post</button>
+        <button type="button" class="btn modal-trigger" data-modal="jobModal" onclick="(function(){ if(window.Pillar && window.Pillar.openModal){ window.Pillar.openModal('jobModal'); return; } var m=document.getElementById('jobModal'); var b=document.getElementById('modalBackdrop'); if(m && b){ m.classList.add('open'); m.setAttribute('aria-hidden','false'); b.classList.add('open'); b.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } })();">+ Post Job</button>
     </div>
 </div>
 
 <!-- Search and Filter -->
 <div class="card" style="margin-bottom: 25px;">
     <form action="<?= BASE_URL ?>/jobs" method="GET" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-        <input type="text" name="search" value="<?= htmlspecialchars($search ?? '') ?>" 
-               placeholder="🔍 Search jobs..." 
+         <input type="text" name="search" value="<?= htmlspecialchars($search ?? '') ?>" 
+             placeholder="Search jobs..." 
                style="flex: 1; min-width: 200px; padding: 12px 20px; border-radius: 25px; border: 2px solid #e0e0e0;">
         
         <select name="category" style="padding: 12px 20px; border-radius: 25px; border: 2px solid #e0e0e0;">
             <option value="">All Categories</option>
-            <option value="Technology" <?= ($category ?? '') === 'Technology' ? 'selected' : '' ?>>💻 Technology</option>
-            <option value="Marketing" <?= ($category ?? '') === 'Marketing' ? 'selected' : '' ?>>📢 Marketing</option>
-            <option value="Finance" <?= ($category ?? '') === 'Finance' ? 'selected' : '' ?>>💰 Finance</option>
-            <option value="Design" <?= ($category ?? '') === 'Design' ? 'selected' : '' ?>>🎨 Design</option>
-            <option value="Sales" <?= ($category ?? '') === 'Sales' ? 'selected' : '' ?>>📈 Sales</option>
-            <option value="HR" <?= ($category ?? '') === 'HR' ? 'selected' : '' ?>>👥 Human Resources</option>
-            <option value="Other" <?= ($category ?? '') === 'Other' ? 'selected' : '' ?>>📦 Other</option>
+            <option value="Technology" <?= ($category ?? '') === 'Technology' ? 'selected' : '' ?>>Technology</option>
+            <option value="Marketing" <?= ($category ?? '') === 'Marketing' ? 'selected' : '' ?>>Marketing</option>
+            <option value="Finance" <?= ($category ?? '') === 'Finance' ? 'selected' : '' ?>>Finance</option>
+            <option value="Design" <?= ($category ?? '') === 'Design' ? 'selected' : '' ?>>Design</option>
+            <option value="Sales" <?= ($category ?? '') === 'Sales' ? 'selected' : '' ?>>Sales</option>
+            <option value="HR" <?= ($category ?? '') === 'HR' ? 'selected' : '' ?>>Human Resources</option>
+            <option value="Other" <?= ($category ?? '') === 'Other' ? 'selected' : '' ?>>Other</option>
         </select>
         
         <button type="submit" class="btn">Filter</button>
@@ -39,17 +38,17 @@
             <span class="badge"><?= htmlspecialchars($job['category'] ?? 'General') ?></span>
         </div>
         <p style="font-weight: 600; color: var(--secondary); margin: 5px 0;">
-            🏢 <?= htmlspecialchars($job['company']) ?>
+            <?= htmlspecialchars($job['company']) ?>
         </p>
         <p style="margin: 10px 0; color: #666;"><?= nl2br(htmlspecialchars(substr($job['description'], 0, 120))) ?>...</p>
         <p style="font-size: 0.8rem; color: #999;">
-            📅 Posted <?= date('M d, Y', strtotime($job['created_at'])) ?>
+            Posted <?= date('M d, Y', strtotime($job['created_at'])) ?>
         </p>
         <div style="margin-top: 15px; display: flex; gap: 5px; flex-wrap: wrap;">
-            <a href="<?= BASE_URL ?>/apply?job_id=<?= $job['id'] ?>" class="btn btn-success btn-sm">📝 Apply Now</a>
+            <a href="<?= BASE_URL ?>/apply?job_id=<?= $job['id'] ?>" class="btn btn-success btn-sm">Apply Now</a>
             <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
-                <a href="<?= BASE_URL ?>/jobs/edit?id=<?= $job['id'] ?>" class="btn btn-secondary btn-sm">✏️ Edit</a>
-                <a href="<?= BASE_URL ?>/jobs/delete?id=<?= $job['id'] ?>" class="btn btn-sm delete-link" style="background: #e63946;">🗑️</a>
+                <a href="<?= BASE_URL ?>/jobs/edit?id=<?= $job['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
+                <a href="<?= BASE_URL ?>/jobs/delete?id=<?= $job['id'] ?>" class="btn btn-sm delete-link" style="background: #e63946;">Delete</a>
             <?php endif; ?>
         </div>
     </div>

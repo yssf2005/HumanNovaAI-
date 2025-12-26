@@ -1,39 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Grid animations: only run if .gestions-grid exists, but do not bail out
+    // early so modal and other UI handlers always initialize on every page.
     const grid = document.querySelector('.gestions-grid');
-    if (!grid) return;
+    const cards = grid ? Array.from(document.querySelectorAll('.gestion-card')) : [];
 
-    const cards = Array.from(document.querySelectorAll('.gestion-card'));
+    if (grid && cards.length) {
+        // Stagger entrance via IntersectionObserver
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const idx = cards.indexOf(el);
+                    el.classList.add('in-view');
+                    el.style.animationDelay = `${idx * 80}ms`;
+                    io.unobserve(el);
+                }
+            });
+        }, { threshold: 0.15 });
 
-    // Stagger entrance via IntersectionObserver
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                const idx = cards.indexOf(el);
-                el.classList.add('in-view');
-                el.style.animationDelay = `${idx * 80}ms`;
-                io.unobserve(el);
-            }
+        cards.forEach(c => {
+            c.style.transformStyle = 'preserve-3d';
+            c.style.willChange = 'transform';
+            io.observe(c);
         });
-    }, { threshold: 0.15 });
 
-    cards.forEach(c => {
-        c.style.transformStyle = 'preserve-3d';
-        c.style.willChange = 'transform';
-        io.observe(c);
-    });
-
-    // 3D tilt effect removed — cards use static layout and subtle hover only
-
-    // subtle hover boost per card
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'transform 280ms cubic-bezier(.2,.9,.2,1)';
+        // subtle hover boost per card
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'transform 280ms cubic-bezier(.2,.9,.2,1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transition = 'transform 600ms cubic-bezier(.2,.9,.2,1)';
+            });
         });
-        card.addEventListener('mouseleave', () => {
-            card.style.transition = 'transform 600ms cubic-bezier(.2,.9,.2,1)';
-        });
-    });
+    }
 
     /* Modal handling: open/close by id, backdrop, escape key */
     const backdrop = document.getElementById('modalBackdrop');
@@ -55,6 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
         backdrop.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
     };
+
+    // Expose minimal API to global scope as a fallback for inline handlers
+    try {
+        window.Pillar = window.Pillar || {};
+        window.Pillar.openModal = openModal;
+        window.Pillar.closeModal = closeModal;
+    } catch (e) {}
 
     document.querySelectorAll('.modal-trigger').forEach(btn => {
         btn.addEventListener('click', (e) => {

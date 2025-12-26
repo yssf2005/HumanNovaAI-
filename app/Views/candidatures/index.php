@@ -19,10 +19,10 @@
             <span class="badge"><?= ucfirst($app['status'] ?? 'pending') ?></span>
         </div>
         <p style="margin: 10px 0; color: #666;">
-            🏢 <?= htmlspecialchars($app['company'] ?? 'Company') ?>
+            <?= htmlspecialchars($app['company'] ?? 'Company') ?>
         </p>
         <p style="font-size: 0.85rem; color: #999;">
-            📅 Applied on <?= date('M d, Y', strtotime($app['created_at'])) ?>
+            Applied on <?= date('M d, Y', strtotime($app['created_at'])) ?>
         </p>
         <?php if (!empty($app['cover_letter'])): ?>
         <details style="margin-top: 10px;">

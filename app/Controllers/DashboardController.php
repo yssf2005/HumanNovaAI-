@@ -117,7 +117,12 @@ class DashboardController extends Controller {
                     if ($user && !empty($user['email'])) {
                         $subject = 'Votre idée a été approuvée';
                         $body = \App\Services\MailTemplates::ideaApproved($user['name'] ?? '', $idea['title'] ?? '', defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
-                        \App\Services\Mailer::send($user['email'], $subject, $body);
+                        $headers = "MIME-Version: 1.0\r\n";
+                        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+                        $from = defined('MAIL_FROM_ADDRESS') ? MAIL_FROM_ADDRESS : 'no-reply@example.com';
+                        $fromName = defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : 'No Reply';
+                        $headers .= "From: {$fromName} <{$from}>\r\n";
+                        @mail($user['email'], $subject, $body, $headers);
                     }
                 }
             }
@@ -132,7 +137,12 @@ class DashboardController extends Controller {
                     if ($user && !empty($user['email'])) {
                         $subject = 'Votre offre d\'emploi a été approuvée';
                         $body = \App\Services\MailTemplates::jobApproved($user['name'] ?? '', $job['title'] ?? '', defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
-                        \App\Services\Mailer::send($user['email'], $subject, $body);
+                        $headers = "MIME-Version: 1.0\r\n";
+                        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+                        $from = defined('MAIL_FROM_ADDRESS') ? MAIL_FROM_ADDRESS : 'no-reply@example.com';
+                        $fromName = defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : 'No Reply';
+                        $headers .= "From: {$fromName} <{$from}>\r\n";
+                        @mail($user['email'], $subject, $body, $headers);
                     }
                 }
             }
@@ -147,7 +157,12 @@ class DashboardController extends Controller {
                     if ($user && !empty($user['email'])) {
                         $subject = 'Votre événement a été approuvé';
                         $body = \App\Services\MailTemplates::eventApproved($user['name'] ?? '', $event['title'] ?? '', defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : null);
-                        \App\Services\Mailer::send($user['email'], $subject, $body);
+                        $headers = "MIME-Version: 1.0\r\n";
+                        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+                        $from = defined('MAIL_FROM_ADDRESS') ? MAIL_FROM_ADDRESS : 'no-reply@example.com';
+                        $fromName = defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : 'No Reply';
+                        $headers .= "From: {$fromName} <{$from}>\r\n";
+                        @mail($user['email'], $subject, $body, $headers);
                     }
                 }
             }

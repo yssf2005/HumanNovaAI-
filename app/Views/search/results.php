@@ -1,5 +1,5 @@
 <div class="section-header">
-    <h2>🔍 Search Results</h2>
+    <h2>Search Results</h2>
 </div>
 
 <?php if (!empty($query)): ?>

@@ -190,7 +190,7 @@
             
             <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: none; box-shadow: 0 -4px 6px -4px rgba(0,0,0,0.5);">
                 <label class="btn btn-secondary btn-sm" style="cursor: pointer; margin: 0;">
-                    📷 Add Photo
+                    Add Photo
                     <input type="file" name="image" accept="image/*" style="display: none;" id="imageInput">
                 </label>
                 <span id="fileName" style="font-size: 0.85rem; color: #666;"></span>
@@ -212,7 +212,7 @@
                 <p><?= date('F d, Y', strtotime($post['created_at'])) ?></p>
             </div>
             <?php if (isset($_SESSION['user_id']) && ($post['user_id'] == $_SESSION['user_id'] || $_SESSION['user_role'] == 'admin')): ?>
-                <a href="<?= BASE_URL ?>/feed/delete?id=<?= $post['id'] ?>" class="delete-link" style="margin-left: auto; background: none; border: none; font-size: 1.2rem; cursor: pointer; text-decoration: none;">🗑️</a>
+                <a href="<?= BASE_URL ?>/feed/delete?id=<?= $post['id'] ?>" class="delete-link" style="margin-left: auto; background: none; border: none; font-size: 1.2rem; cursor: pointer; text-decoration: none;">Delete</a>
             <?php endif; ?>
         </div>
 
@@ -226,10 +226,10 @@
         <!-- Post Actions -->
         <div class="post-actions">
             <a href="<?= BASE_URL ?>/feed/like?id=<?= $post['id'] ?>" class="post-action-btn <?= ($post['user_liked'] ?? false) ? 'liked' : '' ?>">
-                <?= ($post['user_liked'] ?? false) ? '❤️' : '🤍' ?>
+                Like
             </a>
-            <span class="post-action-btn">💬</span>
-            <span class="post-action-btn">📤</span>
+            <span class="post-action-btn">Comment</span>
+            <span class="post-action-btn">Share</span>
         </div>
 
         <!-- Post Content -->

@@ -30,9 +30,9 @@
             <p class="footer-contact">Email: <a href="mailto:<?= htmlspecialchars(FOOTER_EMAIL) ?>"><?= htmlspecialchars(FOOTER_EMAIL) ?></a></p>
             <p class="footer-contact" style="margin-top:6px">Phone: <?= htmlspecialchars(FOOTER_PHONE) ?></p>
             <div class="footer-social" style="margin-top:12px;">
-                <a href="#">🐦</a>
-                <a href="#">💼</a>
-                <a href="#">🔗</a>
+                <a href="#">Twitter</a>
+                <a href="#">Jobs</a>
+                <a href="#">Links</a>
             </div>
         </div>
     </div>

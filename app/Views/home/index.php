@@ -23,7 +23,7 @@
                 <h3>Ideas Management</h3>
                 <p>Capture, refine and prioritize ideas. Invite collaborators, collect feedback, and track the status of proposals as they move from concept to validated project.</p>
                 <p class="muted">Features: idea submission forms, commenting, tagging, and status workflows.</p>
-                <button type="button" class="btn modal-trigger" data-modal="ideaModal">Submit Idea</button>
+                <button type="button" class="btn modal-trigger" data-modal="ideaModal" onclick="(function(){ if(window.Pillar && window.Pillar.openModal){ window.Pillar.openModal('ideaModal'); return; } var m=document.getElementById('ideaModal'); var b=document.getElementById('modalBackdrop'); if(m && b){ m.classList.add('open'); m.setAttribute('aria-hidden','false'); b.classList.add('open'); b.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } })();">Submit Idea</button>
             </div>
         </div>
         <div class="gestion-card bg-yellow">
@@ -45,7 +45,7 @@
                 <h3>Events Management</h3>
                 <p>Plan and promote events, manage registrations, and engage attendees. Use event pages, ticketing, and attendee lists to run meetups, workshops, and conferences.</p>
                 <p class="muted">Features: event pages, RSVPs, attendee export, and calendar integration.</p>
-                <button type="button" class="btn modal-trigger" data-modal="eventModal">Create Event</button>
+                <button type="button" class="btn modal-trigger" data-modal="eventModal" onclick="(function(){ if(window.Pillar && window.Pillar.openModal){ window.Pillar.openModal('eventModal'); return; } var m=document.getElementById('eventModal'); var b=document.getElementById('modalBackdrop'); if(m && b){ m.classList.add('open'); m.setAttribute('aria-hidden','false'); b.classList.add('open'); b.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } })();">Create Event</button>
             </div>
         </div>
         <div class="gestion-card bg-blue">
@@ -56,7 +56,7 @@
                 <h3>Jobs & Hiring</h3>
                 <p>Post roles, manage applications, and communicate with candidates. Build talent pipelines and shortlist applicants with integrated CV review features.</p>
                 <p class="muted">Features: job listings, application tracking, messaging, and candidate profiles.</p>
-                <button type="button" class="btn modal-trigger" data-modal="jobModal">Create Job</button>
+                <button type="button" class="btn modal-trigger" data-modal="jobModal" onclick="(function(){ if(window.Pillar && window.Pillar.openModal){ window.Pillar.openModal('jobModal'); return; } var m=document.getElementById('jobModal'); var b=document.getElementById('modalBackdrop'); if(m && b){ m.classList.add('open'); m.setAttribute('aria-hidden','false'); b.classList.add('open'); b.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } })();">Create Job</button>
             </div>
         </div>
         
