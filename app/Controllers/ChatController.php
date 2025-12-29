@@ -12,6 +12,11 @@ class ChatController extends Controller {
         parent::__construct();
         // initialize from environment variable (set GROQ_API_KEY in your environment)
         $this->groqApiKey = getenv('GROQ_API_KEY');
+        if (empty($this->groqApiKey)) {
+            // fallback to other common places PHP may have env vars
+            if (!empty($_ENV['GROQ_API_KEY'])) $this->groqApiKey = $_ENV['GROQ_API_KEY'];
+            elseif (!empty($_SERVER['GROQ_API_KEY'])) $this->groqApiKey = $_SERVER['GROQ_API_KEY'];
+        }
     }
     
     public function chat() {
