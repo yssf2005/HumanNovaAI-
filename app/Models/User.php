@@ -58,4 +58,11 @@ class User extends Model {
         
         return $stmt->execute();
     }
+
+    public function delete($id) {
+        $sql = "DELETE FROM users WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
 }
