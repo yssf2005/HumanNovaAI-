@@ -8,12 +8,12 @@
         <section aria-labelledby="personal-info-heading" class="card" style="padding:20px; margin-bottom:16px;">
             <h3 id="personal-info-heading">Personal Information</h3>
             <form id="personal-info-form" novalidate>
-                <div style="display:flex; gap:16px; align-items:center; margin-top:12px;">
-                    <div style="flex:0 0 110px; text-align:center;">
-                        <div id="avatar-preview" style="width:110px; height:110px; border-radius:8px; overflow:hidden; background:#111; display:inline-block;">
+                <div style="display:flex; gap:20px; align-items:flex-start; margin-top:12px;">
+                    <div style="flex:0 0 180px; text-align:center;">
+                        <div id="avatar-preview" style="width:180px; height:180px; border-radius:12px; overflow:hidden; background:#111; display:inline-block;">
                             <img src="<?= htmlspecialchars($user['avatar'] ?? '/images/default-avatar.png') ?>" alt="Profile avatar" style="width:100%; height:100%; object-fit:cover;" />
                         </div>
-                        <div style="margin-top:8px; display:flex; gap:8px; justify-content:center;">
+                        <div style="margin-top:10px; display:flex; gap:10px; justify-content:center;">
                             <label for="avatar-input" class="btn btn-sm">Change</label>
                             <button id="remove-avatar-btn" type="button" class="btn btn-sm btn-outline">Remove</button>
                         </div>
@@ -21,10 +21,6 @@
                     </div>
 
                     <div style="flex:1;">
-                        <div style="margin-bottom:12px;">
-                            <label for="full-name">Full name</label>
-                            <input id="full-name" name="name" type="text" value="<?= htmlspecialchars($user['name'] ?? '') ?>" required aria-required="true">
-                        </div>
                         <div style="display:flex; gap:12px;">
                             <div style="flex:1;">
                                 <label for="username">Username</label>
@@ -36,11 +32,7 @@
                                 <input id="phone" name="phone" type="tel" value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
                             </div>
                         </div>
-                        <div style="margin-top:12px;">
-                            <label for="bio">Bio / About me</label>
-                            <textarea id="bio" name="bio" maxlength="200" rows="3"><?= htmlspecialchars($user['bio'] ?? '') ?></textarea>
-                            <div class="muted" id="bio-count"><?= strlen($user['bio'] ?? '') ?>/200</div>
-                        </div>
+
                         <div style="margin-top:12px;">
                             <label for="email">Email address</label>
                             <div style="display:flex; gap:12px; align-items:center;">
@@ -48,12 +40,18 @@
                                 <div class="muted" aria-live="polite">Verification: <?= isset($user['email_verified']) && $user['email_verified'] ? 'Verified' : 'Unverified' ?></div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div style="display:flex; gap:12px; margin-top:18px;">
-                    <button id="save-personal" class="btn" type="submit">Save</button>
-                    <button id="cancel-personal" class="btn btn-secondary" type="button">Cancel</button>
+                        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:18px;">
+                            <button id="cancel-personal" class="btn btn-secondary" type="button">Cancel</button>
+                            <button id="save-personal" class="btn" type="submit">Save</button>
+                        </div>
+
+                        <div style="margin-top:16px;">
+                            <label for="bio">Bio / About me</label>
+                            <textarea id="bio" name="bio" maxlength="200" rows="3"><?= htmlspecialchars($user['bio'] ?? '') ?></textarea>
+                            <div class="muted" id="bio-count"><?= strlen($user['bio'] ?? '') ?>/200</div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </section>
@@ -202,3 +200,24 @@
 <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
 <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
 <script src="<?= BASE_URL ?>/js/profile-settings.js" defer></script>
+<?php if (isset($_GET['section']) && !empty($_GET['section'])): ?>
+    <script>
+        (function(){
+            var sec = '<?= htmlspecialchars($_GET['section']) ?>';
+            var map = {
+                'security':'security-heading',
+                'preferences':'preferences-heading',
+                'privacy':'privacy-heading',
+                'connected':'connected-heading',
+                'danger':'danger-zone-heading'
+            };
+            var id = map[sec] || null;
+            if(id){
+                window.addEventListener('load', function(){
+                    var el = document.getElementById(id);
+                    if(el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'start'});
+                });
+            }
+        })();
+    </script>
+<?php endif; ?>

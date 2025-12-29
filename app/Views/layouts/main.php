@@ -110,7 +110,17 @@
                         </div>
                     </div>
                     <a href="<?= BASE_URL ?>/logout">Logout</a>
-                    <a href="<?= BASE_URL ?>/profile" class="nav-icon" title="Profile" style="margin-left:6px;">Profile</a>
+                    <button id="profilePopupBtn" class="nav-icon" title="Profile" style="margin-left:6px; background:none; border:none; cursor:pointer;">Profile</button>
+                    <div id="profile-popup" class="profile-popup" style="display:none; position:absolute; right:14px; top:56px; background:#fff; border:1px solid #ddd; box-shadow:0 8px 20px rgba(0,0,0,0.08); border-radius:8px; padding:12px; z-index:9999;">
+                        <div style="display:flex;flex-direction:column;gap:8px;min-width:200px;">
+                            <a href="<?= BASE_URL ?>/profile" class="btn-link">Personal Information</a>
+                            <a href="<?= BASE_URL ?>/profile?section=security" class="btn-link">Account & Security</a>
+                            <a href="<?= BASE_URL ?>/profile?section=preferences" class="btn-link">Preferences</a>
+                            <a href="<?= BASE_URL ?>/profile?section=privacy" class="btn-link">Privacy Settings</a>
+                            <a href="<?= BASE_URL ?>/profile?section=connected" class="btn-link">Connected Accounts</a>
+                            <a href="<?= BASE_URL ?>/profile?section=danger" class="btn-link" style="color:#b91c1c;">Danger Zone</a>
+                        </div>
+                    </div>
                 </div>
             <?php else: ?>
                 <div style="margin-left:auto;display:flex;gap:10px;align-items:center;">
