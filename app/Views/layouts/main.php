@@ -6,6 +6,7 @@
     <title>PILLAR</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/home-theme.css">
+    <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Flaticon UIcons removed (icons disabled) -->
     <style>

@@ -39,12 +39,26 @@
         addMessage('user', message); chatInput.value = '';
         const typingId = addMessage('bot', 'Typing...');
         try{
-            const baseUrl = document.querySelector('script[src*="chatbot.js"]')?.src.split('/js/')[0] || '';
-            const response = await fetch(baseUrl + '/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message }) });
-            const data = await response.json();
-            const typingMsg = document.getElementById(typingId); if (typingMsg) typingMsg.remove();
-            if (data && data.success) addMessage('bot', data.message);
-            else addMessage('bot', data.message || 'Sorry, I encountered an error.');
+            // Prefer global BASE_URL if set (handles hosted in subfolder). Fallback to script location or relative.
+            const scriptBase = document.querySelector('script[src*="chatbot.js"]')?.src.split('/js/')[0] || '';
+            const baseUrl = (window && window.BASE_URL) ? window.BASE_URL : scriptBase || '';
+            try {
+                const response = await fetch(baseUrl + '/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message }), credentials: 'same-origin' });
+                const typingMsg = document.getElementById(typingId); if (typingMsg) typingMsg.remove();
+                let data;
+                try { data = await response.json(); } catch(e){ data = null; }
+                if (response.ok && data && data.success) {
+                    addMessage('bot', data.message);
+                } else {
+                    // show helpful server-side message when available
+                    const serverMsg = data && (data.message || data.error) ? (data.message || data.error) : (response.statusText || 'Server error');
+                    addMessage('bot', serverMsg || 'Sorry, I encountered an error.');
+                }
+            } catch(err){
+                const typingMsg = document.getElementById(typingId); if (typingMsg) typingMsg.remove();
+                addMessage('bot', "Sorry, I'm having trouble connecting.");
+                console.error('Chat request failed', err);
+            }
         }catch(err){ const typingMsg = document.getElementById(typingId); if (typingMsg) typingMsg.remove(); addMessage('bot', "Sorry, I'm having trouble connecting."); }
     }
 
