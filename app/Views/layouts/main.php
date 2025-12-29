@@ -111,7 +111,7 @@
                     </div>
                     <a href="<?= BASE_URL ?>/logout">Logout</a>
                     <button id="profilePopupBtn" class="nav-icon" title="Profile" style="margin-left:6px; background:none; border:none; cursor:pointer;">Profile</button>
-                    <div id="profile-popup" class="profile-popup" style="display:none; position:absolute; right:14px; top:56px; background:#fff; border:1px solid #ddd; box-shadow:0 8px 20px rgba(0,0,0,0.08); border-radius:8px; padding:12px; z-index:9999;">
+                    <div id="profile-popup" class="profile-popup" tabindex="-1" aria-hidden="true" style="display:none; position:absolute; right:14px; top:56px; background:#fff; border:1px solid #ddd; box-shadow:0 8px 20px rgba(0,0,0,0.08); border-radius:8px; padding:12px; z-index:9999;">
                         <div style="display:flex;flex-direction:column;gap:8px;min-width:200px;">
                             <a href="<?= BASE_URL ?>/profile" class="btn-link">Personal Information</a>
                             <a href="<?= BASE_URL ?>/profile?section=security" class="btn-link">Account & Security</a>
@@ -319,6 +319,43 @@
     })();
     </script>
     <script src="<?= BASE_URL ?>/js/custom-login-modal.js"></script>
+    <script>
+    // Profile popup: open/close, outside click, Escape, keyboard activation
+    (function(){
+        var btn = document.getElementById('profilePopupBtn');
+        var popup = document.getElementById('profile-popup');
+        if (!btn || !popup) return;
+
+        function openPopup(){
+            popup.style.display = 'block';
+            popup.setAttribute('aria-hidden','false');
+            btn.setAttribute('aria-expanded','true');
+            // focus the popup for keyboard users
+            try{ popup.focus(); }catch(e){}
+            document.addEventListener('click', onDocClick);
+            document.addEventListener('keydown', onKeyDown);
+        }
+
+        function closePopup(){
+            popup.style.display = 'none';
+            popup.setAttribute('aria-hidden','true');
+            btn.setAttribute('aria-expanded','false');
+            document.removeEventListener('click', onDocClick);
+            document.removeEventListener('keydown', onKeyDown);
+            try{ btn.focus(); }catch(e){}
+        }
+
+        function toggle(e){ e && e.stopPropagation(); if (popup.style.display === 'block') closePopup(); else openPopup(); }
+
+        function onDocClick(e){ if (!e.target.closest || (!e.target.closest('#profile-popup') && e.target !== btn)) closePopup(); }
+
+        function onKeyDown(e){ if (e.key === 'Escape') closePopup(); }
+
+        btn.addEventListener('click', toggle);
+        btn.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+
+    })();
+    </script>
     <script>
     (function(){
         var header = document.querySelector('.site-header');
