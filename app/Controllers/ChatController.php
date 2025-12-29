@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 
 class ChatController extends Controller {
-    private $groqApiKey;
+    private $groqApiKey = null;
     private $groqApiUrl = 'https://api.groq.com/openai/v1/chat/completions';
     
     public function __construct() {
@@ -30,9 +30,15 @@ class ChatController extends Controller {
             return;
         }
         
+        // Ensure the API key is configured
+        if (empty($this->groqApiKey)) {
+            echo json_encode(['error' => 'API key missing', 'message' => 'Chat service not configured. Please set GROQ_API_KEY in your environment.']);
+            return;
+        }
+
         // Call Groq API
         $response = $this->callGroqAPI($message);
-        
+
         echo json_encode($response);
     }
     
@@ -61,27 +67,36 @@ class ChatController extends Controller {
             'Content-Type: application/json',
             'Authorization: Bearer ' . $this->groqApiKey
         ]);
-        
+
         $response = curl_exec($ch);
+        $curlErr = curl_error($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        
-        if ($httpCode !== 200) {
+
+        if ($response === false) {
             return [
                 'error' => 'API Error',
-                'message' => 'Sorry, I encountered an error. Please try again.'
+                'message' => 'Could not contact chat service: ' . ($curlErr ?: 'unknown error')
             ];
         }
-        
+
         $result = json_decode($response, true);
-        
+
+        if ($httpCode !== 200) {
+            $providerMsg = $result['error']['message'] ?? $result['message'] ?? null;
+            return [
+                'error' => 'API Error',
+                'message' => 'Chat service returned an error. ' . ($providerMsg ? $providerMsg : 'Please try again later.')
+            ];
+        }
+
         if (isset($result['choices'][0]['message']['content'])) {
             return [
                 'success' => true,
                 'message' => $result['choices'][0]['message']['content']
             ];
         }
-        
+
         return [
             'error' => 'Invalid response',
             'message' => 'Sorry, I could not process your request.'
