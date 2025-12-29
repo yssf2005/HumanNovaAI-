@@ -11,6 +11,15 @@
     <style>
     body { font-family: 'Poppins', sans-serif; }
 
+    /* modal-section visibility helper (used by modal and auth pages) */
+    .modal-section { display: none; }
+    .modal-section.visible { display: block; }
+    /* Modal CTA buttons */
+    .modal-cta { display:flex; gap:12px; margin:12px 0 18px }
+    .modal-cta a { padding:10px 18px; border-radius:8px; text-decoration:none; font-weight:700 }
+    .modal-cta .cta-login { background:linear-gradient(to right,#5b64e8,#3f4fcf); color:#fff }
+    .modal-cta .cta-register { background:#fff; color:#6b6b67; border:1px solid rgba(0,0,0,0.06) }
+
     /* Notifications UI */
     .notif-bell { position: relative; display: inline-block; margin-right: 12px; cursor: pointer; }
     .notif-bell .badge { position: absolute; top: -6px; right: -6px; background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; }
@@ -101,7 +110,7 @@
                         </div>
                     </div>
                     <a href="<?= BASE_URL ?>/logout">Logout</a>
-                    <a href="<?= BASE_URL ?>/settings" class="nav-icon" title="Settings" style="margin-left:6px;">Settings</a>
+                    <a href="<?= BASE_URL ?>/profile" class="nav-icon" title="Profile" style="margin-left:6px;">Profile</a>
                 </div>
             <?php else: ?>
                 <div style="margin-left:auto;display:flex;gap:10px;align-items:center;">
@@ -138,21 +147,47 @@
                 <div class="custom-modal-left">
                     <h1 class="custom-modal-title">Welcome!</h1>
                     <p class="custom-modal-desc">Connect to your account below.</p>
-                    <form id="custom-login-form" action="<?= BASE_URL ?>/login" method="POST" autocomplete="on">
-                        <div class="input-block">
-                            <label for="custom-login-email" class="input-label">Email</label>
-                            <input type="email" name="email" id="custom-login-email" placeholder="Email" required>
-                        </div>
-                        <div class="input-block">
-                            <label for="custom-login-password" class="input-label">Password</label>
-                            <input type="password" name="password" id="custom-login-password" placeholder="Password" required>
-                        </div>
-                        <div class="custom-modal-buttons">
-                            <a href="<?= BASE_URL ?>/forgot">Forgot your password?</a>
-                            <button type="submit" class="input-button">Login</button>
-                        </div>
-                    </form>
-                    <p class="sign-up">Don't have an account? <a href="<?= BASE_URL ?>/register">Sign up now</a></p>
+                    <div class="modal-cta">
+                        <a class="cta-login" href="<?= BASE_URL ?>/login">Login</a>
+                        <a class="cta-register" href="<?= BASE_URL ?>/register">Register</a>
+                    </div>
+                    <div class="modal-section login visible">
+                        <form id="custom-login-form" action="<?= BASE_URL ?>/login" method="POST" autocomplete="on">
+                            <div class="input-block">
+                                <label for="custom-login-email" class="input-label">Email</label>
+                                <input type="email" name="email" id="custom-login-email" placeholder="Email" required>
+                            </div>
+                            <div class="input-block">
+                                <label for="custom-login-password" class="input-label">Password</label>
+                                <input type="password" name="password" id="custom-login-password" placeholder="Password" required>
+                            </div>
+                            <div class="custom-modal-buttons">
+                                <a href="<?= BASE_URL ?>/forgot" id="modal-forgot">Forgot your password?</a>
+                                <button type="submit" class="input-button">Login</button>
+                            </div>
+                        </form>
+                        <p class="sign-up">Don't have an account? <a href="#" class="open-register-modal">Sign up now</a></p>
+                    </div>
+                    <div class="modal-section register" style="display:none">
+                        <form id="custom-register-form" action="<?= BASE_URL ?>/register" method="POST" autocomplete="on">
+                            <div class="input-block">
+                                <label class="input-label">Email</label>
+                                <input type="email" name="email" placeholder="Email" required>
+                            </div>
+                            <div class="input-block">
+                                <label class="input-label">Password</label>
+                                <input type="password" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="input-block">
+                                <label class="input-label">Confirm Password</label>
+                                <input type="password" name="password_confirm" placeholder="Confirm Password" required>
+                            </div>
+                            <div class="custom-modal-buttons">
+                                <a href="#" class="open-login-modal">Already have an account?</a>
+                                <button type="submit" class="input-button">Register</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="custom-modal-right">
                     <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1000&q=80" alt="">
@@ -161,7 +196,6 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"></path></svg>
                 </button>
             </div>
-            <button class="custom-modal-button" id="customLoginModalOpenBtn">Click here to login</button>
         </div>
 
     <!-- Chatbot Widget -->
@@ -289,5 +323,44 @@
     </script>
     <script src="<?= BASE_URL ?>/js/chatbot.js"></script>
     <script src="<?= BASE_URL ?>/js/home-animations.js"></script>
+    <?php if (!isset($_SESSION['user_id'])): ?>
+    <script>
+    // If user is not logged in, intercept internal link clicks and open the login modal instead
+    (function(){
+        document.addEventListener('click', function(e){
+            var a = e.target.closest && e.target.closest('a');
+            if (!a) return;
+            // don't intercept clicks that occur inside the modal itself
+            if (a.closest && a.closest('#customLoginModal')) return;
+            var href = a.getAttribute('href') || '';
+            // Allow anchors, mailto, tel, javascript, and links explicitly marked for guests
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:') || a.classList.contains('allow-guest')) return;
+            // If link points to an absolute external URL, allow it
+            try {
+                var url = new URL(href, window.location.href);
+                if (url.origin !== window.location.origin) return;
+            } catch (err) {
+                // ignore invalid URL parsing
+            }
+            // If link specifically targets register, open modal and switch to register
+            try {
+                var pathname = (new URL(href, window.location.href)).pathname;
+                if (pathname && pathname.endsWith('/register')) {
+                    e.preventDefault();
+                    var headerBtn = document.getElementById('customLoginModalBtn');
+                    if (headerBtn) headerBtn.click();
+                    // wait then switch
+                    setTimeout(function(){ document.querySelectorAll('.open-register-modal').forEach(function(el){ el.click(); }); }, 120);
+                    return;
+                }
+            } catch (err) {}
+            // Prevent navigation and open the login modal
+            e.preventDefault();
+            var headerBtn = document.getElementById('customLoginModalBtn');
+            if (headerBtn) headerBtn.click();
+        }, true);
+    })();
+    </script>
+    <?php endif; ?>
 </body>
 </html>

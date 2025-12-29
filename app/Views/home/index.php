@@ -5,6 +5,7 @@
         <p class="lead">A collaborative platform that connects creators, investors, and talent — bringing ideas to life through tools for idea submission, funding, hiring and events. Start exploring or manage your projects with the tools below.</p>
         <p class="intro-sub">Whether you're pitching an idea, scouting investments, hiring talent, or organizing events, our platform helps you run the full lifecycle from discovery to growth.</p>
         <p><a href="<?= BASE_URL ?>/about" class="btn">Learn more about the platform</a></p>
+        <p style="margin-top:12px;"><a href="<?= BASE_URL ?>/profile" class="btn btn-outline">Open Profile Settings</a></p>
     </div>
 </section>
 
