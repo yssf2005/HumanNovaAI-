@@ -47,17 +47,17 @@
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Payment Method</h2>
-                <span class="close">&times;</span>
+    <!-- Payment Popover (anchored) -->
+    <div id="paymentPopover" class="payment-popover" aria-hidden="true" style="display:none;position:absolute;z-index:10000;">
+        <div class="popover-content">
+            <div class="popover-header">
+                <h3>Payment Method</h3>
+                <button class="close" aria-label="Close">&times;</button>
             </div>
 
-            <div class="modal-body">
+            <div class="popover-body">
                 <div class="plan-summary">
-                    <h3>Selected Plan</h3>
+                    <h4>Selected Plan</h4>
                     <div class="plan-details">
                         <span class="plan-name" id="selected-plan">Monthly Plan</span>
                         <span class="plan-price" id="selected-price">$20/month</span>
@@ -66,7 +66,7 @@
 
                 <form class="payment-form" id="paymentForm">
                     <div class="form-section">
-                        <h3>Billing Information</h3>
+                        <h4>Billing</h4>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="first_name">First Name</label>
@@ -81,34 +81,10 @@
                             <label for="email">Email Address</label>
                             <input type="email" id="email" name="email" required>
                         </div>
-                        <div class="form-group">
-                            <label for="address">Billing Address</label>
-                            <input type="text" id="address" name="address" placeholder="Street address" required>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input type="text" id="city" name="city" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="zip">ZIP Code</label>
-                                <input type="text" id="zip" name="zip" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="country">Country</label>
-                            <select id="country" name="country" required>
-                                <option value="">Select Country</option>
-                                <option value="US">United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="UK">United Kingdom</option>
-                                <option value="AU">Australia</option>
-                            </select>
-                        </div>
                     </div>
 
                     <div class="form-section">
-                        <h3>Payment Information</h3>
+                        <h4>Payment</h4>
                         <div class="form-group">
                             <label for="card_number">Card Number</label>
                             <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" required>
@@ -161,231 +137,87 @@
     .btn-outline:hover { background: #00a8ff; color: white; }
 </style>
 
-<!-- Modal Styles -->
+<!-- Popover Styles -->
 <style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 10000 !important; /* Higher than notifications */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5) !important;
-        animation: fadeIn 0.3s ease-out;
-    }
+    .payment-popover { display: none; position: absolute; z-index: 10000; }
+    .popover-content { background: #fff; border-radius: 8px; box-shadow: 0 12px 30px rgba(0,0,0,0.12); width: 360px; overflow: hidden; }
+    .popover-header { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-bottom:1px solid #eee; }
+    .popover-header h3 { margin:0; font-size:1rem; }
+    .popover-header .close { background:none; border:0; font-size:20px; cursor:pointer; color:#666; }
+    .popover-body { padding:12px 14px; max-height:70vh; overflow:auto; }
+    .popover-body .plan-summary { margin-bottom:10px; }
+    .popover-body h4 { margin:0 0 8px 0; font-size:0.95rem; }
+    .popover-body .form-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }
 
-    .modal-content {
-        background-color: #fff;
-        margin: 5% auto;
-        padding: 0;
-        border-radius: 8px;
-        width: 90%;
-        max-width: 800px;
-        max-height: 90vh;
-        overflow-y: auto;
-        animation: slideIn 0.3s ease-out;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes slideIn {
-        from { transform: translateY(-50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 30px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .modal-header h2 {
-        margin: 0;
-        color: #333;
-    }
-
-    .close {
-        color: #aaa;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .close:hover {
-        color: #000;
-    }
-
-    .modal-body {
-        padding: 30px;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 40px;
-    }
-
-    .plan-summary {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-    }
-
-    .plan-summary h3 {
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-    .plan-details {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .plan-name {
-        font-weight: 600;
-    }
-
-    .plan-price {
-        font-weight: 700;
-        color: #00a8ff;
-    }
-
-    .payment-form {
-        background: white;
-    }
-
-    .form-section {
-        margin-bottom: 30px;
-    }
-
-    .form-section h3 {
-        margin-bottom: 20px;
-        color: #333;
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 10px;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin-bottom: 15px;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: 500;
-        color: #555;
-    }
-
-    .form-group input,
-    .form-group select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-        transition: border-color 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
-        outline: none;
-        border-color: #00a8ff;
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 15px;
-        justify-content: flex-end;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-
-    @media (max-width: 768px) {
-        .modal-body {
-            grid-template-columns: 1fr;
-        }
-        .form-row {
-            grid-template-columns: 1fr;
-        }
-        .form-actions {
-            flex-direction: column;
-        }
-    }
+    @media (max-width: 600px) { .popover-content { width: 92vw; } }
 </style>
 
 <script>
-    // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
-        // Modal functionality
-        const modal = document.getElementById('paymentModal');
-        const closeBtn = document.querySelector('.close');
+        const popover = document.getElementById('paymentPopover');
+        const closeBtn = popover.querySelector('.close');
         const cancelBtn = document.getElementById('cancelBtn');
         const subscribeBtns = document.querySelectorAll('.subscribe-btn');
         const selectedPlan = document.getElementById('selected-plan');
         const selectedPrice = document.getElementById('selected-price');
         const paymentForm = document.getElementById('paymentForm');
 
-        // Debug: Check if elements exist
-        console.log('Modal elements loaded:', {
-            modal: !!modal,
-            closeBtn: !!closeBtn,
-            cancelBtn: !!cancelBtn,
-            subscribeBtns: subscribeBtns.length,
-            selectedPlan: !!selectedPlan,
-            selectedPrice: !!selectedPrice,
-            paymentForm: !!paymentForm
-        });
+        function showPopoverAt(button) {
+            const rect = button.getBoundingClientRect();
+            const popWidth = Math.min(360, window.innerWidth - 20);
+            let left = rect.left + window.scrollX;
+            let top = rect.bottom + window.scrollY + 8;
 
-        // Open modal when subscribe button is clicked
+            // Adjust if overflowing right
+            if (left + popWidth > window.scrollX + window.innerWidth - 10) {
+                left = window.scrollX + window.innerWidth - popWidth - 10;
+            }
+            // Ensure not off-screen left
+            if (left < 10) left = 10 + window.scrollX;
+
+            popover.style.left = left + 'px';
+            popover.style.top = top + 'px';
+            popover.style.display = 'block';
+            popover.setAttribute('aria-hidden', 'false');
+        }
+
+        function hidePopover() {
+            popover.style.display = 'none';
+            popover.setAttribute('aria-hidden', 'true');
+            paymentForm.reset();
+        }
+
         subscribeBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
                 const plan = this.getAttribute('data-plan');
                 const price = this.getAttribute('data-price');
 
                 selectedPlan.textContent = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
                 selectedPrice.textContent = '$' + price + '/' + (plan === 'yearly' ? 'year' : 'month');
 
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
+                showPopoverAt(this);
             });
         });
 
-        // Close modal functions
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            paymentForm.reset();
-        }
+        closeBtn.addEventListener('click', hidePopover);
+        cancelBtn.addEventListener('click', hidePopover);
 
-        closeBtn.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                closeModal();
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!popover.contains(e.target) && !e.target.closest('.subscribe-btn')) {
+                hidePopover();
             }
         });
 
-        // Handle form submission
+        // Prevent clicks inside popover from closing
+        popover.addEventListener('click', function(e){ e.stopPropagation(); });
+
+        // Form submission (placeholder)
         paymentForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            // Here you would typically send the data to your payment processor
-            alert('Payment processing would happen here. This is just a demo.');
-            closeModal();
+            alert('Payment processing would happen here.');
+            hidePopover();
         });
     });
 </script>
