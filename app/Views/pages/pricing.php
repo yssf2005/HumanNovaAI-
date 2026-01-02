@@ -29,7 +29,7 @@
                     <li>Priority support</li>
                     <li>Advanced analytics</li>
                 </ul>
-                <a href="#" class="btn">Subscribe Now</a>
+                <a href="<?= BASE_URL ?>/payment?plan=monthly&price=20" class="btn">Subscribe Now</a>
             </div>
 
             <div class="pricing-card">
@@ -42,7 +42,7 @@
                     <li>Dedicated account manager</li>
                     <li>Custom integrations</li>
                 </ul>
-                <a href="#" class="btn">Subscribe Now</a>
+                <a href="<?= BASE_URL ?>/payment?plan=yearly&price=100" class="btn">Subscribe Now</a>
             </div>
         </div>
     </div>
