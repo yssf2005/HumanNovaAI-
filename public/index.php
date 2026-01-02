@@ -99,7 +99,6 @@ $app->router->get('/about', [App\Controllers\PageController::class, 'about']);
 $app->router->get('/contact', [App\Controllers\PageController::class, 'contact']);
 $app->router->get('/privacy', [App\Controllers\PageController::class, 'privacy']);
 $app->router->get('/pricing', [App\Controllers\PageController::class, 'pricing']);
-$app->router->get('/payment', [App\Controllers\PageController::class, 'payment']);
 
 // Chat API
 $app->router->post('/api/chat', [App\Controllers\ChatController::class, 'chat']);

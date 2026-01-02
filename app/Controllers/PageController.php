@@ -24,8 +24,4 @@ class PageController extends Controller {
     public function pricing() {
         $this->render('pages/pricing');
     }
-
-    public function payment() {
-        $this->render('pages/payment');
-    }
 }
