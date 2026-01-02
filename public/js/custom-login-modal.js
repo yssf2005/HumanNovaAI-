@@ -2,10 +2,13 @@
 (function(){
   var body = document.body;
   var modal = document.getElementById('customLoginModal');
-  var modalButton = document.getElementById('customLoginModalOpenBtn');
   var headerBtn = document.getElementById('customLoginModalBtn');
   var closeButton = modal ? modal.querySelector('.custom-close-button') : null;
   var isOpened = false;
+  var loginForm = modal ? modal.querySelector('#custom-login-form') : null;
+  var registerForm = modal ? modal.querySelector('#custom-register-form') : null;
+  var switchToRegisterLinks = document.querySelectorAll('.open-register-modal');
+  var switchToLoginLinks = document.querySelectorAll('.open-login-modal');
 
   function openModal() {
     if (!modal) return;
@@ -22,7 +25,6 @@
     body.style.overflow = '';
   }
 
-  if (modalButton) modalButton.addEventListener('click', openModal);
   if (headerBtn) headerBtn.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
   if (closeButton) closeButton.addEventListener('click', closeModal);
 
@@ -35,4 +37,23 @@
   modal && modal.addEventListener('click', function(e){
     if(e.target === modal) closeModal();
   });
+
+  // Support switching between login and register inside modal
+  function showRegister() {
+    // prefer modal if present, otherwise operate on page sections
+    var root = modal || document;
+    root.querySelectorAll && root.querySelectorAll('.modal-section').forEach(s => s.classList.remove('visible'));
+    var reg = root.querySelector && root.querySelector('.modal-section.register');
+    if (reg) reg.classList.add('visible');
+  }
+  function showLogin() {
+    var root = modal || document;
+    root.querySelectorAll && root.querySelectorAll('.modal-section').forEach(s => s.classList.remove('visible'));
+    var lg = root.querySelector && root.querySelector('.modal-section.login');
+    if (lg) lg.classList.add('visible');
+  }
+
+  // Wire links/buttons that should open register or login inside modal
+  switchToRegisterLinks.forEach(function(el){ el.addEventListener('click', function(e){ e.preventDefault(); openModal(); showRegister(); }); });
+  switchToLoginLinks.forEach(function(el){ el.addEventListener('click', function(e){ e.preventDefault(); openModal(); showLogin(); }); });
 })();

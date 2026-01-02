@@ -1,62 +1,46 @@
-<div class="auth-container">
-        <div class="auth-card">
-                <h2 class="auth-title">Bienvenue sur votre plateforme de gestion intelligente</h2>
+<?php
+// Use the same split modal layout as register for consistent UX
+?>
+<div class="auth-modal-wrapper">
+    <div class="auth-modal-card" role="dialog" aria-labelledby="login-title">
+        <div class="auth-modal-left">
+            <h1 id="login-title" class="modal-welcome">WELCOME!</h1>
+            <p class="modal-sub">Connect to your account below.</p>
 
-                <div class="auth-tabs">
-                        <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">Connexion</button>
-                        <button id="tab-register" class="auth-tab" onclick="goRegister()">Inscription</button>
+            <?php if (isset($error)): ?>
+                <div class="alert alert-error" style="margin: 12px 0;"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
+
+            <form id="login-form" action="<?= BASE_URL ?>/login" method="POST">
+                <label for="email">Email</label>
+                <input id="email" class="modal-input" type="email" name="email" required>
+
+                <label for="password">Password</label>
+                <input id="password" class="modal-input" type="password" name="password" required>
+
+                <div class="modal-actions">
+                    <a class="link-muted" id="modal-forgot" href="<?= BASE_URL ?>/forgot">Mot de passe oublié ?</a>
+                    <button type="submit" class="modal-btn">Se connecter</button>
                 </div>
+            </form>
 
-                <?php if (isset($error)): ?>
-                        <div class="alert alert-error" style="margin: 15px 0;"><?= htmlspecialchars($error) ?></div>
-                <?php endif; ?>
-
-                <form id="login-form" action="<?= BASE_URL ?>/login" method="POST">
-                        <div class="auth-field">
-                                <label>EMAIL</label>
-                                <input type="email" name="email" autocomplete="email" placeholder="helloworld@gmail.com" required>
-                        </div>
-                        <div class="auth-field">
-                                <label>MOT DE PASSE</label>
-                                <input type="password" name="password" autocomplete="current-password" placeholder="••••••••••••" required>
-                        </div>
-                        <div style="text-align: right; margin-bottom: 20px;">
-                                <a href="<?= BASE_URL ?>/forgot" style="color: #7d84ff; font-size: 0.9rem; text-decoration: none;">Mot de passe oublié ?</a>
-                        </div>
-                        <button type="submit" class="auth-submit">SE CONNECTER</button>
-                </form>
+            <p style="margin-top:12px">Don't have an account? <a href="#" class="open-register-modal">Sign up now</a></p>
         </div>
+        <div class="auth-modal-right" aria-hidden="true"></div>
+    </div>
 </div>
 
-<script>
-function switchAuthTab(type) {
-        // purely visual here; keep the login tab active by default
-        const loginTab = document.getElementById('tab-login');
-        const registerTab = document.getElementById('tab-register');
-        if (type === 'login') {
-                loginTab.classList.add('active');
-                registerTab.classList.remove('active');
-        }
-}
-
-function goRegister() {
-        window.location.href = "<?= BASE_URL ?>/register";
-}
-
-// Ensure login tab is active on load
-window.addEventListener('load', () => switchAuthTab('login'));
-</script>
-
 <style>
-.auth-container { max-width: 450px; margin: 80px auto; }
-.auth-card { background: #2a2d4e; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); color:#fff }
-.auth-title { text-align:center; margin-bottom:12px; font-size:1.2rem }
-.auth-tabs { display:flex; border-bottom:2px solid #3d426a; margin:16px 0 22px }
-.auth-tab { flex:1; background:none; border:none; color:#888; padding:12px; cursor:pointer; font-size:1rem; font-weight:500; position:relative; border-bottom:3px solid transparent }
-.auth-tab.active { color:#fff }
-.auth-tab.active::after { content:''; position:absolute; bottom:-3px; left:20%; right:20%; height:3px; background:linear-gradient(to right,#7d84ff,#4cc9f0); border-radius:3px }
-.auth-field { margin-bottom:20px }
-.auth-field label { display:block; color:#bbb; margin-bottom:8px; font-weight:600 }
-.auth-field input { width:100%; padding:12px; border-radius:8px; border:none; font-size:1rem }
-.auth-submit { width:100%; padding:12px; border-radius:8px; background:linear-gradient(to right,#7d84ff,#5b64e8); border:none; color:#fff; font-weight:700 }
+/* reuse register modal styles but slightly narrower */
+.auth-modal-wrapper { display:flex; align-items:center; justify-content:center; min-height:70vh; padding: 40px; }
+.auth-modal-card { width:720px; max-width:96%; border-radius:12px; overflow:hidden; display:flex; box-shadow:0 25px 50px rgba(0,0,0,0.45); }
+.auth-modal-left { background:#fff; padding:34px; width:52%; color:#2b2b2b; }
+.auth-modal-right { width:48%; background-image: url('https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&w=1000&q=80'); background-size:cover; background-position:center; }
+.modal-welcome { margin:0 0 6px; font-size:28px; letter-spacing:1px; font-weight:700 }
+.modal-sub { margin:0 0 18px; color:#666; }
+.modal-input { width:100%; padding:12px 14px; margin:8px 0 14px; border-radius:10px; border: none; background:#eef6ff; font-size:15px }
+.modal-actions { display:flex; align-items:center; justify-content:space-between; margin-top:8px }
+.modal-btn { background:#ffffff; border:none; padding:10px 26px; border-radius:30px; box-shadow:0 6px 18px rgba(0,0,0,0.08); cursor:pointer; font-weight:600; color:#6b4b3b }
+.link-muted { color:#8b6f66; text-decoration:none; font-size:0.95rem }
+@media (max-width:720px){ .auth-modal-card{flex-direction:column} .auth-modal-right{height:180px;width:100%} .auth-modal-left{width:100%} }
 </style>

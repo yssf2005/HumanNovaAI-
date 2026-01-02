@@ -3,7 +3,7 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'innovation_platform');
-define('BASE_URL', 'http://localhost/projet2/public');
+define('BASE_URL', 'http://localhost/HumanNovaAI-/public');
 // Mail configuration (updated to use your Gmail SMTP settings)
 define('MAIL_DRIVER', 'smtp'); // 'mail' or 'smtp' or 'phpmailer' (if PHPMailer installed)
 define('MAIL_FROM_ADDRESS', 'espsytunisia@gmail.com');
