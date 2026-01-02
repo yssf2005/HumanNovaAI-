@@ -20,4 +20,8 @@ class PageController extends Controller {
     public function privacy() {
         $this->render('pages/privacy');
     }
+
+    public function pricing() {
+        $this->render('pages/pricing');
+    }
 }

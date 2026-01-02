@@ -68,6 +68,7 @@
             </form>
             <div class="nav-links">
                 <a href="<?= BASE_URL ?>/">Home</a>
+                <a href="<?= BASE_URL ?>/pricing">Pricing</a>
                 <div class="nav-dropdown">
                     <a href="<?= BASE_URL ?>/ideas" class="drop-toggle">Ideas ▾</a>
                     <div class="dropdown-menu" aria-hidden="true">
