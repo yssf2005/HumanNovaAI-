@@ -137,19 +137,26 @@
     .btn-outline:hover { background: #00a8ff; color: white; }
 </style>
 
-<!-- Popover Styles -->
+<!-- Popover Styles & Behavior -->
 <style>
-    .payment-popover { display: none; position: absolute; z-index: 10000; }
-    .popover-content { background: #fff; border-radius: 8px; box-shadow: 0 12px 30px rgba(0,0,0,0.12); width: 360px; overflow: hidden; }
+    /* anchored popover (appended to body) */
+    .payment-popover { display: none; position: fixed; z-index: 10000; }
+    .popover-content { background: #fff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); width: 380px; overflow: hidden; transform-origin: top right; opacity: 0; transform: translateY(-6px) scale(0.98); transition: opacity .18s ease, transform .18s ease; }
+    .payment-popover.show .popover-content { opacity: 1; transform: translateY(0) scale(1); }
+
     .popover-header { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-bottom:1px solid #eee; }
-    .popover-header h3 { margin:0; font-size:1rem; }
+    .popover-header h3 { margin:0; font-size:1rem; color:#222; }
     .popover-header .close { background:none; border:0; font-size:20px; cursor:pointer; color:#666; }
+
     .popover-body { padding:12px 14px; max-height:70vh; overflow:auto; }
     .popover-body .plan-summary { margin-bottom:10px; }
     .popover-body h4 { margin:0 0 8px 0; font-size:0.95rem; }
     .popover-body .form-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }
 
-    @media (max-width: 600px) { .popover-content { width: 92vw; } }
+    /* small arrow */
+    .payment-popover::before { content: ''; position: absolute; width: 12px; height: 12px; background: #fff; transform: rotate(45deg); box-shadow: -3px -3px 6px rgba(0,0,0,0.04); }
+
+    @media (max-width: 600px) { .popover-content { width: 92vw; } .payment-popover::before { display:none; } }
 </style>
 
 <script>
@@ -162,26 +169,44 @@
         const selectedPrice = document.getElementById('selected-price');
         const paymentForm = document.getElementById('paymentForm');
 
+        // Move popover to document.body so it's not clipped by containers
+        if (popover && popover.parentNode !== document.body) {
+            document.body.appendChild(popover);
+        }
+
         function showPopoverAt(button) {
             const rect = button.getBoundingClientRect();
-            const popWidth = Math.min(360, window.innerWidth - 20);
-            let left = rect.left + window.scrollX;
-            let top = rect.bottom + window.scrollY + 8;
+            const pop = popover.querySelector('.popover-content');
+            const popWidth = Math.min(pop.offsetWidth || 380, window.innerWidth - 20);
+            // compute left so popover aligns horizontally centered to button if possible
+            let left = rect.left + (rect.width / 2) - (popWidth / 2);
+            const margin = 10;
+            if (left < margin) left = margin;
+            if (left + popWidth > window.innerWidth - margin) left = window.innerWidth - popWidth - margin;
 
-            // Adjust if overflowing right
-            if (left + popWidth > window.scrollX + window.innerWidth - 10) {
-                left = window.scrollX + window.innerWidth - popWidth - 10;
+            // preferred top: below button, otherwise above
+            let top = rect.bottom + 10; // 10px gap
+            const spaceBelow = window.innerHeight - rect.bottom;
+            if (spaceBelow < pop.offsetHeight + 20) {
+                top = rect.top - pop.offsetHeight - 10; // place above
             }
-            // Ensure not off-screen left
-            if (left < 10) left = 10 + window.scrollX;
 
-            popover.style.left = left + 'px';
-            popover.style.top = top + 'px';
+            popover.style.left = (left + window.scrollX) + 'px';
+            popover.style.top = (top + window.scrollY) + 'px';
+            // position arrow
+            const arrow = popover;
+            const arrowLeft = rect.left + rect.width/2 - left - 6; // center arrow relative to pop
+            arrow.style.setProperty('--arrow-left', arrowLeft + 'px');
+            popover.classList.add('show');
             popover.style.display = 'block';
             popover.setAttribute('aria-hidden', 'false');
+
+            // small timeout to allow animation
+            requestAnimationFrame(() => pop.classList.add('visible'));
         }
 
         function hidePopover() {
+            popover.classList.remove('show');
             popover.style.display = 'none';
             popover.setAttribute('aria-hidden', 'true');
             paymentForm.reset();
