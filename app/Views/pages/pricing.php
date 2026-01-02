@@ -327,51 +327,70 @@
 </style>
 
 <script>
-    // Modal functionality
-    const modal = document.getElementById('paymentModal');
-    const closeBtn = document.querySelector('.close');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const subscribeBtns = document.querySelectorAll('.subscribe-btn');
-    const selectedPlan = document.getElementById('selected-plan');
-    const selectedPrice = document.getElementById('selected-price');
-    const paymentForm = document.getElementById('paymentForm');
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Modal functionality
+        const modal = document.getElementById('paymentModal');
+        const closeBtn = document.querySelector('.close');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const subscribeBtns = document.querySelectorAll('.subscribe-btn');
+        const selectedPlan = document.getElementById('selected-plan');
+        const selectedPrice = document.getElementById('selected-price');
+        const paymentForm = document.getElementById('paymentForm');
 
-    // Open modal when subscribe button is clicked
-    subscribeBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const plan = this.getAttribute('data-plan');
-            const price = this.getAttribute('data-price');
-
-            selectedPlan.textContent = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
-            selectedPrice.textContent = '$' + price + '/' + (plan === 'yearly' ? 'year' : 'month');
-
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
+        // Debug: Check if elements exist
+        console.log('Modal elements loaded:', {
+            modal: !!modal,
+            closeBtn: !!closeBtn,
+            cancelBtn: !!cancelBtn,
+            subscribeBtns: subscribeBtns.length,
+            selectedPlan: !!selectedPlan,
+            selectedPrice: !!selectedPrice,
+            paymentForm: !!paymentForm
         });
-    });
 
-    // Close modal functions
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        paymentForm.reset();
-    }
+        // Open modal when subscribe button is clicked
+        subscribeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Subscribe button clicked');
+                const plan = this.getAttribute('data-plan');
+                const price = this.getAttribute('data-price');
 
-    closeBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
+                console.log('Plan:', plan, 'Price:', price);
 
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
+                selectedPlan.textContent = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
+                selectedPrice.textContent = '$' + price + '/' + (plan === 'yearly' ? 'year' : 'month');
+
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal functions
+        function closeModal() {
+            console.log('Closing modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            paymentForm.reset();
         }
-    });
 
-    // Handle form submission
-    paymentForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Here you would typically send the data to your payment processor
-        alert('Payment processing would happen here. This is just a demo.');
-        closeModal();
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Handle form submission
+        paymentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
+            // Here you would typically send the data to your payment processor
+            alert('Payment processing would happen here. This is just a demo.');
+            closeModal();
+        });
     });
 </script>
