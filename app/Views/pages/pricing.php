@@ -166,12 +166,12 @@
     .modal {
         display: none;
         position: fixed;
-        z-index: 1000;
+        z-index: 10000 !important; /* Higher than notifications */
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(255, 0, 0, 0.8) !important; /* Temporary bright red for debugging */
         animation: fadeIn 0.3s ease-out;
     }
 
@@ -185,6 +185,7 @@
         max-height: 90vh;
         overflow-y: auto;
         animation: slideIn 0.3s ease-out;
+        border: 5px solid red !important; /* Temporary debug border */
     }
 
     @keyframes fadeIn {
@@ -349,6 +350,21 @@
             paymentForm: !!paymentForm
         });
 
+        // Temporary debug: Force show modal after 2 seconds
+        setTimeout(() => {
+            console.log('Force showing modal for debug');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            console.log('Modal forced visible, check if you can see red background/border');
+        }, 2000);
+
+        // Add a global function to manually show modal for testing
+        window.showModal = function() {
+            console.log('Manually showing modal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        };
+
         // Open modal when subscribe button is clicked
         subscribeBtns.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -358,11 +374,24 @@
 
                 console.log('Plan:', plan, 'Price:', price);
 
+                // Simple test: Change background color instead of showing modal
+                console.log('Changing body background to red for testing');
+                document.body.style.backgroundColor = 'red';
+
+                // Also try the modal
                 selectedPlan.textContent = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
                 selectedPrice.textContent = '$' + price + '/' + (plan === 'yearly' ? 'year' : 'month');
 
+                console.log('Setting modal display to block');
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
+
+                console.log('Modal display style:', modal.style.display);
+                console.log('Modal computed style:', window.getComputedStyle(modal).display);
+                console.log('Modal visibility:', window.getComputedStyle(modal).visibility);
+                console.log('Modal z-index:', window.getComputedStyle(modal).zIndex);
+                console.log('Modal position:', window.getComputedStyle(modal).position);
+                console.log('Modal rect:', modal.getBoundingClientRect());
             });
         });
 
