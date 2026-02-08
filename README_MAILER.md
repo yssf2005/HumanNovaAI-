@@ -1,4 +1,4 @@
-Composer and PHPMailer installation
+Composer and PHPMailer installation.
 ==================================
 
 If you want full SMTP support, install Composer and PHPMailer. Two options are shown below.
